@@ -1,2 +1,2 @@
 # Reinforcement-learning-issue-data
-A comprehensive dataset of 461 real-world bugs collected from mainstream reinforcement learning frameworks (Tianshou, TRL, RLlib, and Stable-Baselines3), featuring fine-grained annotations of symptoms, root causes, and fix strategies.
+Real-World Bug Dataset for Reinforcement Learning Frameworks: This dataset comprises 461 real-world issues collected from mainstream open-source RL frameworks, featuring fine-grained annotations on runtime symptoms, root causes, and fix strategies. The issue distribution across frameworks is as follows: Tianshou (60), TRL (129), RLlib (169), and Stable-Baselines3 (103).
