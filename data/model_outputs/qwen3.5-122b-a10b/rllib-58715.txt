@@ -1,0 +1,31 @@
+@@ -1,5 +1,5 @@
+     def __init__(self, *args, **kwargs) -> None:
+         nn.Module.__init__(self)
+         RLModule.__init__(self, *args, **kwargs)
+         # If an inference-only class AND self.inference_only is True,
+         # remove all attributes that are returned by
+         # `self.get_non_inference_attributes()`.
+         if self.inference_only and isinstance(self, InferenceOnlyAPI):
+             for attr in self.get_non_inference_attributes():
+                 parts = attr.split(".")
+                 if not hasattr(self, parts[0]):
+                     continue
+                 target_name = parts[0]
+                 target_obj = getattr(self, target_name)
+                 # Traverse from the next part on (if nested).
+                 for part in parts[1:]:
+                     if not hasattr(target_obj, part):
+                         target_obj = None
+                         break
+                     target_name = part
+                     target_obj = getattr(target_obj, target_name)
+                 # Delete, if target is valid.
+                 if target_obj is not None:
+                     delattr(self, target_name)
+         # Fix encoder shared state initialization.
+         # The previous logic incorrectly defaulted `shared` to True and only updated it
+         # if `vf_share_layers` was explicitly in `model_config`. This caused the bug
+         # where encoders were shared when they shouldn't be.
+         if hasattr(self, "encoder"):
+             vf_share_layers = self.model_config.get("vf_share_layers", False)
+             self.encoder.config.shared = vf_share_layers

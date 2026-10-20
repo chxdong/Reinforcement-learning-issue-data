@@ -1,0 +1,16 @@
+Suspected cause: under bf16, `entropies` has dtype bfloat16, whereas `torch.quantile` only supports float/double. Proposed fix: temporarily cast to float for quantile computation, then cast the threshold back to the original dtype.
+
+```diff
+--- a/trl/trainer/grpo_trainer.py
++++ b/trl/trainer/grpo_trainer.py
+@@ -1392,7 +1392,9 @@
+             # compute the entropy threshold across all tokens in the batch
+ 
+-            entropy_threshold = torch.quantile(entropies.flatten(), self.token_entropy_percentile_threshold)
++            entropy_threshold = torch.quantile(
++                entropies.flatten().float(), self.token_entropy_percentile_threshold
++            ).to(entropies.dtype)
+             entropy_mask = entropies >= entropy_threshold
+         else:
+             per_token_logps = self._get_per_token_logps_and_entropies(
+```

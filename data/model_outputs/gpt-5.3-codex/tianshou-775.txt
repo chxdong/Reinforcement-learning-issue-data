@@ -1,0 +1,8 @@
+--- a/tianshou/policy/modelfree/pg.py
++++ b/tianshou/policy/modelfree/pg.py
+@@ -1,4 +1,4 @@
+-        logits, hidden = self.actor(batch.obs, state=state)
++        logits, hidden = self.actor(batch.obs, state=state, info=batch.info)
+         if isinstance(logits, tuple):
+             dist = self.dist_fn(*logits)
+         else:

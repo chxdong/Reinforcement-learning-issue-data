@@ -1,0 +1,10 @@
+--- a/trl/trainer/sft_trainer.py
++++ b/trl/trainer/sft_trainer.py
+@@ -473,7 +473,7 @@ class SFTTrainer(Trainer):
+                 "`attn_implementation='flash_attention_2'` in the model configuration."
+             )
+-        if args.assistant_only_loss and not is_conversational(train_dataset[0]):
++        if args.assistant_only_loss and not is_conversational(next(iter(train_dataset))):
+             raise ValueError(
+                 "You set `assistant_only_loss=True`, but the dataset is not conversational. This option is only "
+                 "supported for conversational datasets."

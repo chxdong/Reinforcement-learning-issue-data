@@ -1,0 +1,9 @@
+@@ -1,7 +1,7 @@
+ class SFTConfig(TrainingArguments):
+     """
+     Args:
+-        packing (`Optional[bool]`):
++        packing (`Optional[bool]`):
+             Used only in case `dataset_text_field` is passed. This argument is used by `SFTTrainer` to pack the sequences
+             in the dataset.
+     """

@@ -1,0 +1,27 @@
+--- a/tianshou/data/buffer.py
++++ b/tianshou/data/buffer.py
+@@ -403,7 +403,7 @@ class PrioritizedReplayBuffer(ReplayBuffer):
+         :return: Sample data and its corresponding index inside the buffer.
+         """
+-        if batch_size > 0 and batch_size <= self._size:
++        if batch_size > 0 and batch_size <= self._size:
+             # Multiple sampling of the same sample
+             # will cause weight update conflict
+             indice = np.random.choice(
+@@ -414,10 +414,13 @@ class PrioritizedReplayBuffer(ReplayBuffer):
+             indice = np.concatenate([
+                 np.arange(self._index, self._size),
+                 np.arange(0, self._index),
+             ])
+         else:
+-            # if batch_size larger than len(self),
+-            # it will lead to a bug in update weight
+-            raise ValueError("batch_size should be less than len(self)")
++            # if batch_size is larger than len(self), return all available data
++            # to avoid an error at the beginning of the training process
++            # (when the buffer is not yet filled).
++            indice = np.concatenate([
++                np.arange(self._index, self._size),
++                np.arange(0, self._index),
++            ])
+         batch = self[indice]

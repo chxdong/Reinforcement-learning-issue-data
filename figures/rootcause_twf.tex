@@ -1,0 +1,107 @@
+% \begin{figure*}[t]
+%     \centering
+    
+%     \begin{subfigure}[t]{0.48\linewidth}
+%         \centering
+%         \includegraphics[width=\linewidth]{Figures/rllib18245.pdf}
+%         \caption{Training Workflow Flaw (RLlib \#18245)}
+%         \label{fig:twf}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[t]{0.48\linewidth}
+%         \centering
+%         \includegraphics[width=\linewidth]{Figures/trl3979.pdf}
+%         \caption{Configuration Interface Bug (TRL \#3979)}
+%         \label{fig:cib}
+%     \end{subfigure}
+
+%     \caption{Bug Examples of Training Workflow Flaw and Configuration Interface Bug.}
+%     \label{fig:twf_cib_example}
+% \end{figure*}
+
+\begin{figure*}[t]
+    \centering
+    % Two separate figures in the first row
+    \begin{subfigure}[t]{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{Figures/rllib18245.pdf}
+        \caption{The RLlib issue \#18245.}
+        \label{fig:twf1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{Figures/trl4282.pdf}
+        \caption{The TRL issue \#4282.}
+        \label{fig:twf2}
+    \end{subfigure}
+    \caption{The examples of training workflow flaw.}
+\end{figure*}
+
+
+
+% \begin{figure*}[t]
+%      \begin{subfigure}[t]{0.48\textwidth}
+%         \centering
+%         \begin{minipage}{0.95\linewidth}
+%             \del{my\_trainer = BareMetalPolicyTrainer(config=config)}
+%             \del{results = my\_trainer.train()}
+%             \add{results = tune.run(BareMetalPolicyTrainer, }
+%             \addline{\phantom{run(}config=config, stop=stop)}
+%             % \vspace{0.5em} % Add a small gap for alignment
+%         \end{minipage}
+%         \caption{Training Workflow Flaw (RLlib\#18245)}
+%         \label{fig:twf}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[t]{0.48\textwidth}
+%         \centering
+%         \begin{minipage}{0.95\linewidth}
+%             \add{ensure\_master\_addr\_port,}
+%             \ctx{......}
+%             \del{\phantom{ensure }os.environ["MASTER\_ADDR"] = }
+%             \del{\phantom{os.environ }os.environ.get("MASTER\_ADDR", "localhost")}
+%             \del{\phantom{ensure }os.environ["MASTER\_PORT"] = }
+%             \del{\phantom{os.environ }os.environ.get("MASTER\_PORT", "12345")}
+%             \add{\phantom{ensure }\# Ensure distributed rendezvous variables are}
+%             \add{\phantom{ensure }\# set without colliding across concurrent runs}
+%             \add{\phantom{ensure }\# ensure\_master\_addr\_port()}
+%         \end{minipage}
+%         \caption{Configuration Interface Bug (TRL\#3979)}
+%         \label{fig:cib}
+%     \end{subfigure}
+%     % Subfigure (f)
+%     % \begin{subfigure}[t]{0.48\textwidth}
+%     %     \centering
+%     %     \begin{minipage}{0.95\linewidth}
+%     %         \ctx{if policy.config["use\_kl\_loss"]:}
+%     %         \del{\phantom{if }total\_loss += policy.kl\_coeff * mean\_kl}
+%     %         \del{ }
+%     %         \del{policy.\_total\_loss = total\_loss}
+%     %         \del{policy.\_mean\_policy\_loss = mean\_policy\_loss}
+%     %         \del{\# Backward compatibility: Deprecate policy.\_mean\_kl.}
+%     %         \del{policy.\_mean\_kl\_loss = policy.\_mean\_kl = mean\_kl}
+%     %         \del{policy.\_mean\_vf\_loss = mean\_vf\_loss}
+%     %         \del{policy.\_mean\_entropy = mean\_entropy}
+%     %         \del{policy.\_value\_targets = value\_targets}
+%     %         \del{policy.\_vf\_explained\_var = explained\_variance(}
+%     %         \add{\phantom{if }total\_loss += policy.kl\_coeff * mean\_kl\_loss}
+%     %         \add{\# Store values for stats function in model (tower), }
+%     %         \add{\#such that for multi-GPU,we do not override them}
+%     % 		\add{\# during the parallel loss phase.}
+%     % 		\add{model.tower\_stats["total\_loss"] = total\_loss}
+%     % 		\add{model.tower\_stats["mean\_policy\_loss"] = mean\_policy\_loss}
+%     % 		\add{model.tower\_stats["mean\_kl\_loss"] = mean\_kl\_loss}
+%     % 		\add{model.tower\_stats["mean\_vf\_loss"] = mean\_vf\_loss}
+%     % 		\add{model.tower\_stats["mean\_entropy"] = mean\_entropy}
+%     % 		\add{model.tower\_stats["value\_targets"] = value\_targets}
+%    	% 		\add{model.tower\_stats["vf\_explained\_var"] = explained\_variance(}
+%     %     \end{minipage}
+%     %     \caption{Distributed Coordination Bug (RLlib\#18812)}
+%     %     \label{fig:twf2}
+%     % \end{subfigure}
+%     \caption{Bug Examples of Training Workflow Flaw and Configuration Interface Bug.}
+%     \label{fig:twf_cib_example}
+% \end{figure*}
+
+

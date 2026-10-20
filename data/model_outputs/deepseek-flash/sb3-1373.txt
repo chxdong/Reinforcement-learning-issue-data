@@ -1,0 +1,21 @@
+@@ -155,6 +155,7 @@ class DQN(OffPolicyAlgorithm):
+         self.batch_norm_stats_target: Dict[str, th.Tensor] = {}
+         self._n_calls = 0
+         self._n_updates = 0
++        self._target_update_interval_initialized = False
+         super()._setup_model()
+ 
+     def _setup_model(self) -> None:
+@@ -161,8 +162,10 @@ class DQN(OffPolicyAlgorithm):
+         if self.n_envs > 1:
+             if self.n_envs > self.target_update_interval:
+                 warnings.warn(
+                     "The number of environments used is greater than the target network "
+                     f"update interval ({self.n_envs} > {self.target_update_interval}), "
+                     "therefore the target network will be updated after each call to env.step() "
+                     f"which corresponds to {self.n_envs} steps."
+                 )
+-            self.target_update_interval = max(self.target_update_interval // self.n_envs, 1)
++            if not self._target_update_interval_initialized:
++                self.target_update_interval = max(self.target_update_interval // self.n_envs, 1)
++                self._target_update_interval_initialized = True

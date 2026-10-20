@@ -1,0 +1,12 @@
+@@ -429,7 +429,7 @@ class Checkpointable(abc.ABC):
+     @classmethod
+     def from_checkpoint(
+         cls,
+         path: Union[str, pathlib.Path],
+         filesystem: Optional["pyarrow.fs.FileSystem"] = None,
+         **kwargs,
+-    ) -> "Checkpointable":
++    ) -> Self:
+         """Creates a new Checkpointable instance from the given location and returns it.
+ 
+         Args:

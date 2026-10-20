@@ -1,0 +1,15 @@
+--- a/examples/scripts/chat.py
++++ b/examples/scripts/chat.py
+@@ -96,10 +96,13 @@
+-            generation_kwargs = dict(
+-                inputs=tokenizer.apply_chat_template(chat, return_tensors="pt", add_generation_prompt=True).to(
+-                    model.device
+-                ),
++            model_inputs = tokenizer.apply_chat_template(
++                chat, return_tensors="pt", add_generation_prompt=True, return_dict=True
++            ).to(model.device)
++            generation_kwargs = dict(
++                **model_inputs,
+                 streamer=generation_streamer,
+                 max_new_tokens=current_args.max_new_tokens,
+                 do_sample=current_args.do_sample,)

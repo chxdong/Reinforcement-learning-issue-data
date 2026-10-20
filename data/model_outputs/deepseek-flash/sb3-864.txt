@@ -1,0 +1,17 @@
+--- a/stable_baselines3/common/on_policy_algorithm.py
++++ b/stable_baselines3/common/on_policy_algorithm.py
+@@ -207,8 +207,11 @@
+ 
+         with th.no_grad():
+             # Compute value for the last timestep
+-            values = self.policy.predict_values(obs_as_tensor(new_obs, self.device))  # type: ignore[arg-type]
++            last_values = self.policy.predict_values(obs_as_tensor(new_obs, self.device))  # type: ignore[arg-type]
+ 
+-        rollout_buffer.compute_returns_and_advantage(last_values=values, dones=dones)
++        # Update the callback's local variables so that `on_rollout_end` sees the
++        # freshly computed `last_values`.
++        callback.update_locals(locals())
++
++        rollout_buffer.compute_returns_and_advantage(last_values=last_values, dones=dones)
+ 
+         callback.on_rollout_end()

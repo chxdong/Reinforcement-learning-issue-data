@@ -1,0 +1,12 @@
+--- a/rllib/train.py
++++ b/rllib/train.py
+@@ -31,7 +31,8 @@ def run(args, parser):
+             rllib_dir = Path(__file__).parent
+             abs_inputs = [
+                 str(rllib_dir.absolute().joinpath(i))
+-                if not os.path.exists(i) else i for i in inputs
++                if not os.path.exists(i) and rllib_dir.joinpath(i).exists()
++                else i for i in inputs
+             ]
+             if not isinstance(input_, list):
+                 abs_inputs = abs_inputs[0]

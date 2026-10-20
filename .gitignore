@@ -1,0 +1,22 @@
+# Local credentials and services
+key.txt
+**/key.txt
+.env
+.env.*
+!.env.example
+*credentials*
+models.local.json
+*.pem
+# Private source archive and translation work files
+source_archive/
+translation_work/
+/*.xlsx
+# Runtime files
+.venv/
+.cache/
+__pycache__/
+*.py[cod]
+*.log
+.DS_Store
+Thumbs.db
+runs/

@@ -1,0 +1,11 @@
+@@ -44,7 +44,7 @@ class VecNormalize(VecEnvWrapper):
+         VecEnvWrapper.__init__(self, venv)
+         self.norm_obs = norm_obs
+         self.norm_obs_keys = norm_obs_keys
+-        # Check observation spaces
+-        if self.norm_obs:
++        # Check observation spaces to ensure norm_obs_keys is initialized for Dict spaces
++        if self.norm_obs or isinstance(self.observation_space, gym.spaces.Dict):
+             self._sanity_checks()
+         if isinstance(self.observation_space, gym.spaces.Dict):
+             self.obs_spaces = self.observation_space.spaces

@@ -1,0 +1,14 @@
+--- a/stable_baselines3/common/vec_env/vec_normalize.py
++++ b/stable_baselines3/common/vec_env/vec_normalize.py
+@@ -54,7 +54,10 @@ class VecNormalize(VecEnvWrapper):
+ 
+         if isinstance(self.observation_space, gym.spaces.Dict):
+             self.obs_spaces = self.observation_space.spaces
+-            self.obs_rms = {key: RunningMeanStd(shape=self.obs_spaces[key].shape) for key in self.norm_obs_keys}
++            self.norm_obs_keys = (
++                self.norm_obs_keys if self.norm_obs_keys is not None else list(self.obs_spaces.keys())
++            )
++            self.obs_rms = {key: RunningMeanStd(shape=self.obs_spaces[key].shape) for key in self.norm_obs_keys}
+         else:
+             self.obs_spaces = None
+             self.obs_rms = RunningMeanStd(shape=self.observation_space.shape)))

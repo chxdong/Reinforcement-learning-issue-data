@@ -1,0 +1,19 @@
+--- a/rllib/train.py
++++ b/rllib/train.py
+@@ -53,10 +53,11 @@
+             inputs = force_list(input_)
+             # This script runs in the ray/rllib dir.
+             rllib_dir = Path(__file__).parent
+-            abs_inputs = [
+-                str(rllib_dir.absolute().joinpath(i))
+-                if not os.path.exists(i) else i for i in inputs
+-            ]
++            abs_inputs = []
++            for i in inputs:
++                abs_path = str(rllib_dir.absolute().joinpath(i))
++                abs_inputs.append(abs_path if os.path.exists(abs_path) else i)
++
+             if not isinstance(input_, list):
+                 abs_inputs = abs_inputs[0]
+ 
+             exp["config"]["input"] = abs_inputs)

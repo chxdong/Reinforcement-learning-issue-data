@@ -1,0 +1,27 @@
+--- a/rllib/evaluation/collectors/simple_list_collector.py
++++ b/rllib/evaluation/collectors/simple_list_collector.py
+@@ -936,10 +936,6 @@
+             policy_collector_group.policy_collectors[
+                 pid
+             ].add_postprocessed_batch_for_training(post_batch, policy.view_requirements)
+ 
+-            if is_done:
+-                del self.agent_key_to_policy_id[agent_key]
+-                del self.agent_collectors[agent_key]
+-
+         if policy_collector_group:
+             env_steps = self.episode_steps[episode_id]
+             policy_collector_group.env_steps += env_steps
+@@ -947,6 +943,13 @@
+             del self.episode_steps[episode_id]
+             del self.agent_steps[episode_id]
+             del self.episodes[episode_id]
++            # Clean up all agent collectors for this episode, including those
++            # whose `training_enabled` was False (and were skipped above).
++            agent_keys = [key for key in self.agent_collectors if key[0] == episode_id]
++            for agent_key in agent_keys:
++                del self.agent_key_to_policy_id[agent_key]
++                del self.agent_collectors[agent_key]
+             # Make PolicyCollectorGroup available for more agent batches in
+             # other episodes. Do not reset count to 0.
+             if policy_collector_group:

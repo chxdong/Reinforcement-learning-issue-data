@@ -1,0 +1,37 @@
+Source,Target,Value
+Dependency and Runtime Compatibility Error,Build Failure,16
+Dependency and Runtime Compatibility Error,Crash,38
+Dependency and Runtime Compatibility Error,Functional Failure,6
+Dependency and Runtime Compatibility Error,Low Efficiency,1
+Distributed and Parallel Coordination Error,Build Failure,2
+Distributed and Parallel Coordination Error,Crash,22
+Distributed and Parallel Coordination Error,Functional Failure,10
+Distributed and Parallel Coordination Error,Hang,7
+Distributed and Parallel Coordination Error,Low Efficiency,2
+Environment Interaction Error,Build Failure,3
+Environment Interaction Error,Crash,29
+Environment Interaction Error,Functional Failure,27
+Environment Interaction Error,Low Efficiency,1
+Experience Processing Error,Crash,18
+Experience Processing Error,Functional Failure,25
+Experience Processing Error,Low Efficiency,4
+Framework Interface and Configuration Error,Build Failure,6
+Framework Interface and Configuration Error,Crash,42
+Framework Interface and Configuration Error,Functional Failure,35
+Framework Interface and Configuration Error,Hang,1
+Framework Interface and Configuration Error,Low Efficiency,3
+General Implementation Error,Build Failure,10
+General Implementation Error,Crash,11
+General Implementation Error,Functional Failure,20
+General Implementation Error,Hang,2
+Learning Mechanism Error,Crash,7
+Learning Mechanism Error,Functional Failure,19
+Learning Mechanism Error,Low Efficiency,17
+Runtime Resource and Device Management Error,Build Failure,7
+Runtime Resource and Device Management Error,Crash,17
+Runtime Resource and Device Management Error,Functional Failure,6
+Runtime Resource and Device Management Error,Low Efficiency,2
+Training State Management Error,Build Failure,1
+Training State Management Error,Crash,9
+Training State Management Error,Functional Failure,29
+Training State Management Error,Low Efficiency,4

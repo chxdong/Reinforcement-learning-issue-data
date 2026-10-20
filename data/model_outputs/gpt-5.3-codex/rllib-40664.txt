@@ -1,0 +1,10 @@
+--- a/rllib/connectors/tests/test_agent.py
++++ b/rllib/connectors/tests/test_agent.py
+@@ -13,7 +13,7 @@
+                 "sensor2": 8.8,
+             },
+             SampleBatch.REWARDS: 5.8,
+-            SampleBatch.ACTIONS: [[1, 1], [2]],
++            SampleBatch.ACTIONS: [[1, 1], [2, 2]],
+             SampleBatch.INFOS: {"random": "info"},
+         }

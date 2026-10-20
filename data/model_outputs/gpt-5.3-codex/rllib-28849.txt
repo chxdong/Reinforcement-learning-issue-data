@@ -1,0 +1,17 @@
+--- a/rllib/models/torch/mingpt.py
++++ b/rllib/models/torch/mingpt.py
+@@ -14,12 +14,10 @@ class Block(nn.Module):
+                 dropout=nn.Dropout(config.resid_pdrop),
+             )
+         )
+-        m = self.mlp
+-        # MLP forward
+-        self.mlpf = lambda x: m.dropout(m.c_proj(m.act(m.c_fc(x))))
+
+     def forward(self, x, attention_masks=None):
+         x_att, att = self.attn(self.ln_1(x), attention_masks=attention_masks)
+         x = x + x_att
+-        x = x + self.mlpf(self.ln_2(x))
++        m = self.mlp
++        x = x + m["dropout"](m["c_proj"](m["act"](m["c_fc"](self.ln_2(x)))))
+         return x, att

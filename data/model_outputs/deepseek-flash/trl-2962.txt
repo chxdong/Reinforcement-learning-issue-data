@@ -1,0 +1,15 @@
+--- a/trl/models/utils.py
++++ b/trl/models/utils.py
+@@ -170,7 +170,10 @@
+     if model.optimizer is not None and hasattr(model.optimizer, "parameter_offload"):
+         optimizer_offload = model.optimizer.parameter_offload
+     elif model.optimizer is not None:
+         optimizer_offload = model.optimizer
+-    optimizer_offload._register_hooks_recursively(optimizer_offload.module)
++    if hasattr(optimizer_offload, "_register_hooks_recursively"):
++        optimizer_offload._register_hooks_recursively(optimizer_offload.module)
++    else:
++        optimizer_offload._register_deepspeed_module_hooks_recursively(optimizer_offload.module)
+ 
+ 
+ def get_all_parameters(sub_module, recurse=False):

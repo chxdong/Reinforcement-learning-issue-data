@@ -1,0 +1,20 @@
+{
+  "models": [
+    {"label": "GPT-5.3-Codex", "model_id": "gpt-5.3-codex", "deployment": "API", "knowledge_cutoff_boundary": "2025-08-31", "cutoff_basis": "Provider disclosure"},
+    {"label": "DeepSeek-Flash", "model_id": null, "deployment": "Laboratory server", "knowledge_cutoff_boundary": "2025-05-31", "cutoff_basis": "Author-reported month; last calendar day used", "checkpoint_revision": null},
+    {"label": "Qwen3.5-122B-A10B", "model_id": "Qwen3.5-122B-A10B", "deployment": "Laboratory server", "knowledge_cutoff_boundary": "2025-07-31", "cutoff_basis": "Author-reported month; last calendar day used", "checkpoint_revision": null}
+  ],
+  "temperature": 0,
+  "top_p": 1,
+  "candidates_per_task": 1,
+  "context_limit_tokens": 32768,
+  "max_input_tokens": 28672,
+  "max_output_tokens": 4096,
+  "timeout_seconds": 120,
+  "seed": null,
+  "external_tools": false,
+  "review_method": "Manual semantic review against developer patches",
+  "independent_reviewers": 2,
+  "reported_cohens_kappa": 0.86,
+  "kappa_basis": "Recorded pre-discussion value; the released table contains final adjudicated judgments"
+}

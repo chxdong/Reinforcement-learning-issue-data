@@ -1,0 +1,31 @@
+@@ -1,5 +1,5 @@
+     def _step(self) -> None:
+         s = self.multi_gpu_learner_thread
+         policy_map = s.policy_map
+         # Get a new batch from the data (inqueue).
+         with self.queue_timer:
+             batch = s.inqueue.get()
+         # Get next idle stack for loading.
+         buffer_idx = s.idle_tower_stacks.get()
+         # Load the batch into the idle stack.
+         with self.load_timer:
+             for pid in policy_map.keys():
+                 if not s.local_worker.is_policy_to_train(pid, batch):
+                     continue
+                 policy = policy_map[pid]
+-                policy.load_batch_into_buffer(
+-                    batch=batch if isinstance(batch, SampleBatch) else batch.policy_batches[pid],
+-                    buffer_index=buffer_idx,
+-                )
++                if isinstance(batch, SampleBatch):
++                    policy.load_batch_into_buffer(
++                        batch=batch,
++                        buffer_index=buffer_idx,
++                    )
++                elif pid in batch.policy_batches:
++                    policy.load_batch_into_buffer(
++                        batch=batch.policy_batches[pid],
++                        buffer_index=buffer_idx,
++                    )
+         # Tag just-loaded stack as "ready".
+         s.ready_tower_stacks.put(buffer_idx)

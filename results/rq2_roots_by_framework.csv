@@ -1,0 +1,37 @@
+framework,category,count,total,percentage
+Tianshou,Framework Interface and Configuration Error,9,54,16.666666666666668
+Tianshou,Dependency and Runtime Compatibility Error,9,54,16.666666666666668
+Tianshou,Environment Interaction Error,5,54,9.25925925925926
+Tianshou,Experience Processing Error,4,54,7.407407407407407
+Tianshou,Learning Mechanism Error,15,54,27.77777777777778
+Tianshou,General Implementation Error,5,54,9.25925925925926
+Tianshou,Training State Management Error,4,54,7.407407407407407
+Tianshou,Distributed and Parallel Coordination Error,3,54,5.555555555555555
+Tianshou,Runtime Resource and Device Management Error,0,54,0.0
+TRL,Framework Interface and Configuration Error,38,126,30.158730158730158
+TRL,Dependency and Runtime Compatibility Error,29,126,23.015873015873016
+TRL,Environment Interaction Error,0,126,0.0
+TRL,Experience Processing Error,17,126,13.492063492063492
+TRL,Learning Mechanism Error,7,126,5.555555555555555
+TRL,General Implementation Error,7,126,5.555555555555555
+TRL,Training State Management Error,4,126,3.1746031746031744
+TRL,Distributed and Parallel Coordination Error,18,126,14.285714285714286
+TRL,Runtime Resource and Device Management Error,6,126,4.761904761904762
+RLlib,Framework Interface and Configuration Error,28,179,15.64245810055866
+RLlib,Dependency and Runtime Compatibility Error,12,179,6.70391061452514
+RLlib,Environment Interaction Error,35,179,19.553072625698324
+RLlib,Experience Processing Error,18,179,10.05586592178771
+RLlib,Learning Mechanism Error,7,179,3.910614525139665
+RLlib,General Implementation Error,15,179,8.379888268156424
+RLlib,Training State Management Error,20,179,11.1731843575419
+RLlib,Distributed and Parallel Coordination Error,21,179,11.731843575418994
+RLlib,Runtime Resource and Device Management Error,23,179,12.849162011173185
+Stable-Baselines3,Framework Interface and Configuration Error,12,100,12.0
+Stable-Baselines3,Dependency and Runtime Compatibility Error,11,100,11.0
+Stable-Baselines3,Environment Interaction Error,20,100,20.0
+Stable-Baselines3,Experience Processing Error,8,100,8.0
+Stable-Baselines3,Learning Mechanism Error,14,100,14.0
+Stable-Baselines3,General Implementation Error,16,100,16.0
+Stable-Baselines3,Training State Management Error,15,100,15.0
+Stable-Baselines3,Distributed and Parallel Coordination Error,1,100,1.0
+Stable-Baselines3,Runtime Resource and Device Management Error,3,100,3.0

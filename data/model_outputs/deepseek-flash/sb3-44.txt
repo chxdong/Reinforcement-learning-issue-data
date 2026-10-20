@@ -1,0 +1,14 @@
+@@ -539,7 +539,7 @@ class StateDependentNoiseDistribution(Distribution):
+     def get_noise(self, latent_sde: th.Tensor) -> th.Tensor:
+         """
+         Sample the weights for the exploration matrix
+         :param latent_sde: (th.Tensor) Latent state used for the exploration
+         :return: (th.Tensor)
+         """
+         # We need to sample the weights
+         if self.weights_dist is None:
+             self.weights_dist = Normal(th.zeros_like(self.exploration_mat), th.ones_like(self.exploration_mat))
+         # Reparametrization trick to pass gradients
+         exploration = self.weights_dist.rsample()
+-        return th.mm(latent_sde, self.exploration_mat)
++        return th.mm(latent_sde, self.exploration_mat.to(latent_sde.device))

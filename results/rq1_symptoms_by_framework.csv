@@ -1,0 +1,21 @@
+framework,category,count,total,percentage
+Tianshou,Crash,12,54,22.22222222222222
+Tianshou,Functional Failure,27,54,50.0
+Tianshou,Build Failure,3,54,5.555555555555555
+Tianshou,Low Efficiency,10,54,18.51851851851852
+Tianshou,Hang,2,54,3.7037037037037037
+TRL,Crash,75,126,59.523809523809526
+TRL,Functional Failure,33,126,26.19047619047619
+TRL,Build Failure,9,126,7.142857142857143
+TRL,Low Efficiency,6,126,4.761904761904762
+TRL,Hang,3,126,2.380952380952381
+RLlib,Crash,68,179,37.98882681564246
+RLlib,Functional Failure,73,179,40.78212290502793
+RLlib,Build Failure,26,179,14.525139664804469
+RLlib,Low Efficiency,7,179,3.910614525139665
+RLlib,Hang,5,179,2.793296089385475
+Stable-Baselines3,Crash,38,100,38.0
+Stable-Baselines3,Functional Failure,44,100,44.0
+Stable-Baselines3,Build Failure,7,100,7.0
+Stable-Baselines3,Low Efficiency,11,100,11.0
+Stable-Baselines3,Hang,0,100,0.0

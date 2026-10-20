@@ -1,0 +1,14 @@
+--- a/rllib/models/torch/mingpt.py
++++ b/rllib/models/torch/mingpt.py
+@@ -20,7 +20,10 @@ class Block(nn.Module):
+             )
+         m = self.mlp
+         # MLP forward
+-        self.mlpf = lambda x: m.dropout(m.c_proj(m.act(m.c_fc(x))))
++        def _fwd(x):
++            _m = m.to(x.device)
++            return _m.dropout(_m.c_proj(_m.act(_m.c_fc(x))))
++        self.mlpf = _fwd
+ 
+     def forward(self, x, attention_masks=None):
+         x_att, att = self.attn(self.ln_1(x), attention_masks=attention_masks)

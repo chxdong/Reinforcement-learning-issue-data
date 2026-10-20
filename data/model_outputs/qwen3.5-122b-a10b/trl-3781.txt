@@ -1,0 +1,11 @@
+--- a/trl/trainer/sft_trainer.py
++++ b/trl/trainer/sft_trainer.py
+@@ -102,7 +102,7 @@ def tokenize(example, processing_class, dataset_text_field, assistant_only_loss)
+             # For Liger kernel, ensure only the essential columns
+             if args.use_liger_kernel:
+                 dataset = dataset.select_columns(
+-                    {"input_ids", "seq_lengths", "completion_mask"}.intersection(dataset.column_names)
++                    {"input_ids", "seq_lengths", "completion_mask", "assistant_masks"}.intersection(dataset.column_names)
+                 )
+ 
+         return dataset

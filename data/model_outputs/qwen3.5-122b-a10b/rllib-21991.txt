@@ -1,0 +1,10 @@
+--- a/rllib/policy/rnn_sequencing.py
++++ b/rllib/policy/rnn_sequencing.py
+@@ -109,7 +109,7 @@ def pad_batch_to_sequences_of_same_size(
+         elif (
+             not feature_keys
+             and not k.startswith("state_out_")
+-            and k not in ["infos", SampleBatch.SEQ_LENS]
++            and k != SampleBatch.SEQ_LENS
+         ):
+             feature_keys_.append(k)

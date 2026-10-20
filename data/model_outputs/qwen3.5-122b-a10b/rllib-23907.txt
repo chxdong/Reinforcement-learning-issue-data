@@ -1,0 +1,13 @@
+@@ -1,5 +1,5 @@
+     def shuffle(self):
+         """Shuffles the data in this batch in-place."""
+         if len(self) == 0:
+             return self
+         # Get permutation to shuffle the data.
+         permutation = np.random.permutation(len(self))
+         for key, val in self.items():
+             if isinstance(val, np.ndarray):
+                 self.data[key] = val[permutation]
++            elif torch is not None and isinstance(val, torch.Tensor):
++                self.data[key] = val[permutation]
+         return self

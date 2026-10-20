@@ -1,0 +1,34 @@
+--- a/rllib/evaluation/collectors/simple_list_collector.py
++++ b/rllib/evaluation/collectors/simple_list_collector.py
+@@ -60,7 +60,8 @@ class _AgentCollector:
+     def add_init_obs(self, episode_id: EpisodeID, agent_index: int,
+-                     env_id: EnvID, t: int, init_obs: TensorType) -> None:
++                     env_id: EnvID, t: int, init_obs: TensorType,
++                     init_state: Dict[str, TensorType] = None) -> None:
+         """Adds an initial observation (after reset) to the Agent's trajectory.
+@@ -79,6 +80,9 @@ class _AgentCollector:
+             init_obs (TensorType): The initial observation tensor (after
+             `env.reset()`).
++            init_state (Dict[str, TensorType]): The initial RNN state
++                (state_in_*) of the policy's model after `get_initial_state()`.
++                If None, will be created by the view-requirement logic.
+         """
+         if SampleBatch.OBS not in self.buffers:
+             self._build_buffers(
+@@ -87,12 +91,18 @@ class _AgentCollector:
+                     "env_id": env_id,
+                     "t": t,
+                 })
++        # Add the model's custom initial state (if provided) to the buffers.
++        if init_state is not None:
++            for k, v in init_state.items():
++                if k not in self.buffers:
++                    self._build_buffers(single_row={k: v})
+         self.buffers[SampleBatch.OBS].append(init_obs)
+         self.episode_id = episode_id
+         self.buffers[SampleBatch.AGENT_INDEX].append(agent_index)
+         self.buffers["env_id"].append(env_id)
+         self.buffers["t"].append(t)
++        if init_state is not None:
++            for k, v in init_state.items():
++                self.buffers[k].append(v)

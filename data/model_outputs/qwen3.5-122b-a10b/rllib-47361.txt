@@ -1,0 +1,10 @@
+--- a/rllib/examples/rl_modules/classes/action_masking_rlm.py
++++ b/rllib/examples/rl_modules/classes/action_masking_rlm.py
+@@ -105,7 +105,7 @@
+     def compute_values(self, batch: Dict[str, TensorType]):
+         # Preprocess the batch to extract the `observations` to `Columns.OBS`.
+         _, batch = self._preprocess_batch(batch)
+-        # Call the super's method to compute values for GAE.
+-        return super()._compute_values(batch)
++        # Call the value network directly to compute values for GAE.
++        return self._value_network(batch[Columns.OBS])

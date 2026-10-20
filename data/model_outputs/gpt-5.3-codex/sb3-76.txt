@@ -1,0 +1,11 @@
+--- a/stable_baselines3/sac/sac.py
++++ b/stable_baselines3/sac/sac.py
+@@ -218,7 +218,5 @@
+                 # Compute the target Q value
+                 target_q1, target_q2 = self.critic_target(replay_data.next_observations, next_actions)
+-                target_q = th.min(target_q1, target_q2)
+-                target_q = replay_data.rewards + (1 - replay_data.dones) * self.gamma * target_q
+-                # td error + entropy term
+-                q_backup = target_q - ent_coef * next_log_prob.reshape(-1, 1)
++                target_q = th.min(target_q1, target_q2) - ent_coef * next_log_prob.reshape(-1, 1)
++                q_backup = replay_data.rewards + (1 - replay_data.dones) * self.gamma * target_q

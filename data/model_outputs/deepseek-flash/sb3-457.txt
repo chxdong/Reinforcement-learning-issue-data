@@ -1,0 +1,13 @@
+@@ -300,6 +300,8 @@ class EvalCallback(EventCallback):
+             self.logger.record("eval/mean_reward", float(mean_reward))
+             self.logger.record("eval/mean_ep_length", mean_ep_length)
+             if len(self._is_success_buffer) > 0:
+                 success_rate = np.mean(self._is_success_buffer)
+                 if self.verbose > 0:
+                     print(f"Success rate: {100 * success_rate:.2f}%")
+                 self.logger.record("eval/success_rate", success_rate)
++            # Dump the logs immediately to ensure they are written with the correct timestep
++            self.logger.dump(step=self.num_timesteps)
+             if mean_reward > self.best_mean_reward:
+                 if self.verbose > 0:
+                     print("New best mean reward!")

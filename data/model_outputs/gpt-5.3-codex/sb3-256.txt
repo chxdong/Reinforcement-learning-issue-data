@@ -1,0 +1,53 @@
+--- a/stable_baselines3/common/logger.py
++++ b/stable_baselines3/common/logger.py
+@@ -127,7 +127,8 @@ class HumanOutputFormat(KVWriter, SeqWriter):
+             self.own_file = False
+     def write(self, key_values: Dict, key_excluded: Dict, step: int = 0) -> None:
+         # Create strings for printing
+-        key2str = {}
++        key2str = []
++        key2str_set = set()
+         tag = None
+         for (key, value), (_, excluded) in zip(sorted(key_values.items()), sorted(key_excluded.items())):
+             if excluded is not None and ("stdout" in excluded or "log" in excluded):
+@@ -147,23 +148,26 @@ class HumanOutputFormat(KVWriter, SeqWriter):
+ 
+             if key.find("/") > 0:  # Find tag and add it to the dict
+                 tag = key[: key.find("/") + 1]
+-                key2str[self._truncate(tag)] = ""
++                truncated_tag = self._truncate(tag)
++                if (tag, truncated_tag) not in key2str_set:
++                    key2str.append((truncated_tag, ""))
++                    key2str_set.add((tag, truncated_tag))
+             # Remove tag from key
+             if tag is not None and tag in key:
+                 key = str("   " + key[len(tag) :])
+ 
+             truncated_key = self._truncate(key)
+-            if truncated_key in key2str:
++            if (tag, truncated_key) in key2str_set:
+                 raise ValueError(
+                     f"Key '{key}' truncated to '{truncated_key}' that already exists. Consider increasing `max_length`."
+                 )
+-            key2str[truncated_key] = self._truncate(value_str)
++            key2str.append((truncated_key, self._truncate(value_str)))
++            key2str_set.add((tag, truncated_key))
+ 
+         # Find max widths
+         if len(key2str) == 0:
+             warnings.warn("Tried to write empty key-value dict")
+             return
+         else:
+-            key_width = max(map(len, key2str.keys()))
+-            val_width = max(map(len, key2str.values()))
++            key_width = max(len(key) for key, _ in key2str)
++            val_width = max(len(value) for _, value in key2str)
+ 
+         # Write out the data
+         dashes = "-" * (key_width + val_width + 7)
+         lines = [dashes]
+-        for key, value in key2str.items():
++        for key, value in key2str:
+             key_space = " " * (key_width - len(key))
+             val_space = " " * (val_width - len(value))
+             lines.append(f"| {key}{key_space} | {value}{val_space} |")

@@ -1,0 +1,11 @@
+--- a/tianshou/policy/modelfree/discrete_sac.py
++++ b/tianshou/policy/modelfree/discrete_sac.py
+@@ -77,8 +77,8 @@ class DiscreteSACPolicy(BasePolicy):
+ 
+     def learn(self, batch: Batch, **kwargs: Any) -> Dict[str, float]:
+-        weight = batch.pop("weight", 1.0)
+         target_q = batch.returns.flatten()
++        weight = to_torch(batch.pop("weight", 1.0), device=target_q.device)
+         act = to_torch(
+             batch.act[:, np.newaxis], device=target_q.device, dtype=torch.long)
+         # critic 1

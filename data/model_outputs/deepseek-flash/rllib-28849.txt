@@ -1,0 +1,12 @@
+--- a/rllib/models/torch/mingpt.py
++++ b/rllib/models/torch/mingpt.py
+@@ -126,7 +126,6 @@
+                 dropout=nn.Dropout(config.resid_pdrop),
+             )
+         )
+-        m = self.mlp
+-        # MLP forward
+-        self.mlpf = lambda x: m.dropout(m.c_proj(m.act(m.c_fc(x))))
++        self.mlpf = lambda x: self.mlp.dropout(
++            self.mlp.c_proj(self.mlp.act(self.mlp.c_fc(x)))
++        )

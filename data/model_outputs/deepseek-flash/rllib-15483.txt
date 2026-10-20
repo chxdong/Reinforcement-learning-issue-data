@@ -1,0 +1,20 @@
+@@ -200,6 +200,10 @@ class SimpleListCollector(SampleCollector):
+         input_dict = {}
+         for view_col, view_req in self.view_requirements.items():
+             data_col = view_req.data_col or view_col
+             # If we don't have this data yet (e.g. first timestep).
+             if data_col not in self.buffers or len(self.buffers[data_col]) == 0:
+                 # If it's an RNN state input, we need to get the initial state.
+                 if view_col.startswith("state_in_") and self.policy.is_recurrent():
+                     # Get the initial state from the model.
+                     initial_states = self.policy.model.get_initial_state()
+                     # The view_col is like "state_in_0", we need to get the 0-th state.
+                     state_idx = int(view_col.split("_")[-1])
+                     input_dict[view_col] = initial_states[state_idx]
+                 else:
+                     # Use 0-padding or default value.
+                     input_dict[view_col] = np.zeros_like(view_req.space.sample())
+             else:
+                 # Get the last value for this column.
+                 input_dict[view_col] = self.buffers[data_col][-1]
+         return input_dict

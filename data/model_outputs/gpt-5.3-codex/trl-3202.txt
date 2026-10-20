@@ -1,0 +1,11 @@
+--- a/trl/trainer/grpo_trainer.py
++++ b/trl/trainer/grpo_trainer.py
+@@ -686,6 +686,8 @@ class GRPOTrainer(Trainer):
+                     reward_processing_class = AutoTokenizer.from_pretrained(reward_func.config._name_or_path)
+                 if reward_processing_class.pad_token_id is None:
+                     reward_processing_class.pad_token = reward_processing_class.eos_token
++                if reward_func.get_input_embeddings().num_embeddings < len(reward_processing_class):
++                    reward_func.resize_token_embeddings(len(reward_processing_class))
+                 # The reward model computes the reward for the latest non-padded token in the input sequence.
+                 # So it's important to set the pad token ID to the padding token ID of the processing class.
+                 reward_func.config.pad_token_id = reward_processing_class.pad_token_id

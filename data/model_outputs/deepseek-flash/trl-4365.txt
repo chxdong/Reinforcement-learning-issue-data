@@ -1,0 +1,40 @@
+--- a/tests/experimental/test_grpo_with_replay_buffer_trainer.py
++++ b/tests/experimental/test_grpo_with_replay_buffer_trainer.py
+@@ -1,3 +1,4 @@
+@@
+         inputs = {
+             "group_advantages": group_advantages,
+             "prompt_ids": torch.tensor([[1, 2], [3, 4], [5, 6], [7, 8]]),
+             "prompt_mask": torch.ones(4, 2, dtype=torch.long),
+             "completion_ids": torch.tensor([[9, 10], [11, 12], [13, 14], [15, 16]]),
+             "completion_mask": torch.ones(4, 2, dtype=torch.long),
+-            "prompt_inputs": {"pixel_values": torch.randn(4, 3, 224, 224)} if with_pixels else {},
+             "old_per_token_logps": torch.randn(4, 2) if with_logprobs else None,
+         }
++        if with_pixels:
++            inputs["pixel_values"] = torch.randn(4, 3, 224, 224)
+         inputs["group_std_rewards"] = group_advantages.std(dim=1).expand_as(group_advantages)
+@@
+         inputs = {
+             "group_advantages": group_advantages,
+             "prompt_ids": torch.tensor(
+                 [
+                     [1, 2, pad_token_id],
+                     [1, 2, pad_token_id],
+                     [3, 4, 5],
+                     [3, 4, 5],
+                 ]
+             ),
+             "prompt_mask": torch.tensor([[1, 1, 0], [1, 1, 0], [1, 1, 1], [1, 1, 1]], dtype=torch.long),
+             "completion_ids": torch.tensor(
+                 [
+                     [1009, 1010, pad_token_id],
+                     [1011, 1012, 1013],
+                     [1013, 1014, pad_token_id],
+                     [1015, 1016, 1017],
+                 ]
+             ),
+             "completion_mask": torch.tensor([[1, 1, 0], [1, 1, 1], [1, 1, 0], [1, 1, 1]], dtype=torch.long),
+-            "prompt_inputs": {},
+         }
+         inputs["group_std_rewards"] = group_advantages.std(dim=1).expand_as(group_advantages)

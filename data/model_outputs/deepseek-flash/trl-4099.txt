@@ -1,0 +1,32 @@
+@@ -126,6 +126,7 @@ def push_to_hub(model, tokenizer, prefix=None, suffix=None, force=False):
+     num_key_value_heads=2,
+     num_hidden_layers=2,
+     intermediate_size=32,
++    layer_types=["full_attention"] * 2,
+ )
+ model = model_class(config)
+ init_weights_tiny_model(model)
+@@ -150,6 +151,7 @@ def push_to_hub(model, tokenizer, prefix=None, suffix=None, force=False):
+     num_key_value_heads=2,
+     num_hidden_layers=2,
+     intermediate_size=32,
++    layer_types=["full_attention"] * 2,
+ )
+ model = model_class(config)
+ push_to_hub(model, tokenizer, "small", "2.5")
+@@ -161,6 +163,7 @@ def push_to_hub(model, tokenizer, prefix=None, suffix=None, force=False):
+     num_key_value_heads=2,
+     num_hidden_layers=2,
+     intermediate_size=32,
++    layer_types=["full_attention"] * 2,
+ )
+ model = model_class(config)
+ push_to_hub(model, tokenizer, "small")
+@@ -174,6 +177,7 @@ def push_to_hub(model, tokenizer, prefix=None, suffix=None, force=False):
+     num_key_value_heads=2,
+     num_hidden_layers=2,
+     intermediate_size=32,
++    layer_types=["full_attention"] * 2,
+     num_labels=1,
+ )
+ model = model_class(config)

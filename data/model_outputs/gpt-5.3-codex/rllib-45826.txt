@@ -1,0 +1,15 @@
+--- a/rllib/env/single_agent_env_runner.py
++++ b/rllib/env/single_agent_env_runner.py
+@@ -191,9 +191,11 @@ class SingleAgentEnvRunner(EnvRunner):
+             # done is smaller than the `train_batch_size`.
+             else:
+                 total = 0
++                rollout_fragment_length = (
++                    self.config.get_rollout_fragment_length(self.worker_index) * self.num_envs
++                )
+                 samples = []
+-                while total < self.config.train_batch_size:
++                while total < rollout_fragment_length:
+                     episodes = self._sample_episodes(
+                         num_episodes=self.num_envs,
+                         explore=explore,)

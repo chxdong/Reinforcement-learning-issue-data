@@ -1,0 +1,13 @@
+--- a/trl/trainer/grpo_trainer.py
++++ b/trl/trainer/grpo_trainer.py
+@@ -111,8 +111,8 @@
+                 state_dict = {
+                     k.removeprefix("base_model.model.").replace(".base_layer", ""): v for k, v in state_dict.items()
+                 }
+-                # Remove values with adapter prefix (example: "_lora")
+-                state_dict = {k: v for k, v in state_dict.items() if unwrapped_model.prefix not in k}
++                # Remove values with adapter prefix (example: "lora_")
++                state_dict = {k: v for k, v in state_dict.items() if "lora_" not in k}
+                 # When module to save, remove its prefix and discard the original module
+                 state_dict = {
+                     k.replace("modules_to_save.default.", ""): v

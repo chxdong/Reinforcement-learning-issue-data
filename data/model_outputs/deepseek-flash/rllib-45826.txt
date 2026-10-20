@@ -1,0 +1,26 @@
+@@ -123,15 +123,15 @@ class SingleAgentEnvRunner:
+     def _sample_episodes(
+         self, num_episodes: int, explore: bool, random_actions: bool = False
+     ) -> List[SingleAgentEpisode]:
+         """Helper method to run n episodes.
+         See docstring of `self.sample()` for more details.
+         """
+         # If user calls sample(num_timesteps=..) after this, we must reset again
+         # at the beginning.
+         self._needs_initial_reset = True
+         done_episodes_to_return: List[SingleAgentEpisode] = []
+         # Reset the environment.
+         # TODO (simon): Check, if we need here the seed from the config.
+         ################ Reset ################
+-        obs, infos = self.env.reset()
+         episodes = []
+         for env_index in range(self.num_envs):
+             episodes.append(self._new_episode())
+         ################ Callback ################
+         self._make_on_episode_callback("on_episode_created", env_index, episodes)
++        obs, infos = self.env.reset()
+         _shared_data = {}
+         for env_index in range(self.num_envs):
+             episodes[env_index].add_env_reset(
+                 observation=obs[env_index], infos=infos[env_index]
+             )

@@ -1,0 +1,10 @@
+--- a/tianshou/policy/modelfree/discrete_sac.py
++++ b/tianshou/policy/modelfree/discrete_sac.py
+@@ -1,4 +1,5 @@
+ def learn(self, batch: Batch, **kwargs: Any) -> Dict[str, float]:
+         weight = batch.pop("weight", 1.0)
+         target_q = batch.returns.flatten()
++        weight = to_torch(weight, device=target_q.device, dtype=torch.float)
+         act = to_torch(
+             batch.act[:, np.newaxis], device=target_q.device, dtype=torch.long)
+         # critic 1

@@ -1,0 +1,11 @@
+--- a/rllib/env/multi_agent_env.py
++++ b/rllib/env/multi_agent_env.py
+@@ -512,7 +512,7 @@ class MultiAgentEnvWrapper(BaseEnv):
+             assert isinstance(env, MultiAgentEnv)
+         self.env_states = [_MultiAgentEnvState(env) for env in self.envs]
+         self._unwrapped_env = self.envs[0].unwrapped
+-        self._agent_ids = self._unwrapped_env.get_agent_ids()
++        self._agent_ids = self.envs[0].get_agent_ids()
+ 
+     @override(BaseEnv)
+     def poll(X53)

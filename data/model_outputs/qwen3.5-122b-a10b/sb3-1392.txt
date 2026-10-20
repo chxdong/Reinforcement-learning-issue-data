@@ -1,0 +1,43 @@
+@@ -1,5 +1,5 @@
+ def add(
+         self,
+         obs: Dict[str, np.ndarray],
+         action: np.ndarray,
+         reward: np.ndarray,
+         episode_start: np.ndarray,
+         value: th.Tensor,
+         log_prob: th.Tensor,
+     ) -> None:  # pytype: disable=signature-mismatch
+         """
+         :param obs: Observation
+         :param action: Action
+         :param reward:
+         :param episode_start: Start of episode signal.
+         :param value: estimated value of the current state
+             following the current policy.
+         :param log_prob: log probability of the action
+             following the current policy.
+         """
+         if len(log_prob.shape) == 0:
+             # Reshape 0-d tensor to avoid error
+             log_prob = log_prob.reshape(-1, 1)
+
+         for key in self.observations.keys():
+             obs_ = np.array(obs[key]).copy()
+             # Reshape needed when using multiple envs with discrete observations
+             # as numpy cannot broadcast (n_discrete,) to (n_discrete, 1)
+             if isinstance(self.observation_space.spaces[key], spaces.Discrete):
+                 obs_ = obs_.reshape((self.n_envs,) + self.obs_shape[key])
+             self.observations[key][self.pos] = obs_
+
+-        self.actions[self.pos] = np.array(action).copy()
++        # Reshape action in case we have a multi-dimensional action space (e.g. images)
++        action = np.array(action).copy().reshape(self.actions.shape[1:])
++        self.actions[self.pos] = action
+         self.rewards[self.pos] = np.array(reward).copy()
+         self.episode_starts[self.pos] = np.array(episode_start).copy()
+         self.values[self.pos] = value.clone().cpu().numpy().flatten()
+         self.log_probs[self.pos] = log_prob.clone().cpu().numpy()
+         self.pos += 1
+         if self.pos == self.buffer_size:
+             self.full = True

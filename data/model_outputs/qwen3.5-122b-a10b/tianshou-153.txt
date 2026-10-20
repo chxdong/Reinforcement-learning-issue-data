@@ -1,0 +1,12 @@
+@@ -136,12 +136,12 @@ class ReplayBuffer:
+     def update(self, buffer: 'ReplayBuffer') -> None:
+         """Move the data from the given buffer to self."""
+         if len(buffer) == 0:
+             return
+         i = begin = buffer._index % len(buffer)
+         while True:
+-            self.add(**buffer[i])
++            self.add(**buffer._meta[i])
+             i = (i + 1) % len(buffer)
+             if i == begin:
+                 break

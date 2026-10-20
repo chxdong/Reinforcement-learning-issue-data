@@ -1,0 +1,15 @@
+--- a/trl/trainer/online_dpo_trainer.py
++++ b/trl/trainer/online_dpo_trainer.py
+@@ -508,7 +508,11 @@
+         output = model(prompt_completion_ids, attention_mask=prompt_completion_mask)
+ 
+         # There is 1 offset, because the model predict the next token
+-        logits = output.logits[:, prompt_ids.size(1) - 1 : -1]
++        prompt_length = prompt_ids.size(1)
++        if prompt_length > 0:
++            logits = output.logits[:, prompt_length - 1 : -1]
++        else:
++            logits = output.logits
+ 
+         # Take the completion tokens logprob
+         logprobs = torch.take_along_dim(logits.log_softmax(dim=-1), completion_ids.unsqueeze(-1), dim=2).squeeze(-1)

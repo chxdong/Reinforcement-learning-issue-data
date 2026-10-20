@@ -1,0 +1,7 @@
+class ActorProb(nn.Module):
+    def __init__(self, layer_num, state_shape, action_shape,
+                 max_action, device='cpu'):
+                 max_action, device='cpu', unbounded=False):
+        super().__init__()
+        self.device = device
+        self.model = [

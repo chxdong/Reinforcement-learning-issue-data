@@ -1,0 +1,11 @@
+--- a/src/transformers/trainer.py
++++ b/src/transformers/trainer.py
+@@ -582,7 +582,7 @@ class Trainer:
+             )
+         default_label_names = find_labels(self.model.__class__)
+         self.label_names = default_label_names if self.args.label_names is None else self.args.label_names
+-        self.can_return_loss = can_return_loss(self.model.__class__)
++        self.can_return_loss = can_return_loss(unwrapped_model.__class__)
+         self.control = self.callback_handler.on_init_end(self.args, self.state, self.control)
+ 
+         # Internal variables to help with automatic batch size reduction

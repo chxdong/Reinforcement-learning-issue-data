@@ -1,0 +1,11 @@
+--- a/stable_baselines3/sac/policies.py
++++ b/stable_baselines3/sac/policies.py
+@@ -142,6 +142,8 @@ class Actor(BasePolicy):
+         """
+         assert isinstance(self.action_dist, StateDependentNoiseDistribution), \
+             'reset_noise() is only available when using gSDE'
+         self.action_dist.sample_weights(self.log_std, batch_size=batch_size)
++        self.action_dist.exploration_mat = self.action_dist.exploration_mat.to(self.device)
++        self.action_dist.exploration_matrices = self.action_dist.exploration_matrices.to(self.device)
+ 
+     def get_action_dist_params(self, obs: th.Tensor) -> Tuple[th.Tensor, th.Tensor, Dict[str, th.Tensor]]:X131)

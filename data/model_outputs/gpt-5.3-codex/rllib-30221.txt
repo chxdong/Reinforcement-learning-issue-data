@@ -1,0 +1,19 @@
+--- a/trl/trainer/grpo_trainer.py
++++ b/trl/trainer/grpo_trainer.py
+@@ -1040,8 +1040,6 @@ class GRPOTrainer(Trainer):
+                 and `False` otherwise.
+         """
+         non_pad_entropies = entropies[mask.bool()].float()
+-        if non_pad_entropies.numel() == 0:
+-            return torch.zeros_like(entropies, dtype=torch.bool)
+ 
+         # The shape of non_pad_entropies can be different on each gpu/device.
+         # this can cause the gather operation to hang. So we first gather the lengths
+@@ -1049,6 +1047,8 @@ class GRPOTrainer(Trainer):
+         non_pad_entropies_seq_length = torch.tensor([non_pad_entropies.numel()], device=entropies.device)
+         max_non_pad_entropies_seq_length = self.accelerator.gather(non_pad_entropies_seq_length).max().item()
++        if max_non_pad_entropies_seq_length == 0:
++            return torch.zeros_like(entropies, dtype=torch.bool)
+         padding = torch.zeros(
+             max_non_pad_entropies_seq_length - non_pad_entropies.numel(), device=non_pad_entropies.device
+         )

@@ -1,0 +1,40 @@
+{
+  "models": [
+    {
+      "label": "GPT-5.3-Codex",
+      "model": "gpt-5.3-codex",
+      "base_url": "http://127.0.0.1:8000/v1",
+      "api_key_env": "GPT_API_KEY",
+      "temperature": 0.0,
+      "max_tokens": 4096,
+      "candidates_per_task": 1,
+      "seed": null,
+      "timeout_seconds": 120,
+      "extra_body": {}
+    },
+    {
+      "label": "DeepSeek-Flash",
+      "model": "REPLACE_WITH_LOCAL_MODEL_ID",
+      "base_url": "http://127.0.0.1:8001/v1",
+      "api_key_env": "LOCAL_DEEPSEEK_API_KEY",
+      "temperature": 0.0,
+      "max_tokens": 4096,
+      "candidates_per_task": 1,
+      "seed": null,
+      "timeout_seconds": 120,
+      "extra_body": {}
+    },
+    {
+      "label": "Qwen3.5-122B-A10B",
+      "model": "Qwen3.5-122B-A10B",
+      "base_url": "http://127.0.0.1:8002/v1",
+      "api_key_env": "LOCAL_QWEN_API_KEY",
+      "temperature": 0.0,
+      "max_tokens": 4096,
+      "candidates_per_task": 1,
+      "seed": null,
+      "timeout_seconds": 120,
+      "extra_body": {}
+    }
+  ]
+}

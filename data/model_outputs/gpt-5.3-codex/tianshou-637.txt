@@ -1,0 +1,29 @@
+--- a/test/discrete/test_a2c_with_il.py
++++ b/test/discrete/test_a2c_with_il.py
+@@ -1,12 +1,18 @@
+ import argparse
+ import os
+ import pprint
++import sys
+ 
+-import envpool
++try:
++    import envpool
++except ImportError:
++    envpool = None
++
+ import gym
+ import numpy as np
++import pytest
+ import torch
+ from torch.utils.tensorboard import SummaryWriter
+ 
+@@ -57,6 +63,7 @@ def get_args():
+     args = parser.parse_known_args()[0]
+     return args
+ 
+ 
++@pytest.mark.skipif(sys.platform != "linux" or envpool is None, reason="envpool only support linux now")
+ def test_a2c_with_il(args=get_args()):
+     train_envs = env = envpool.make_gym(
+         args.task, num_envs=args.training_num, seed=args.seed

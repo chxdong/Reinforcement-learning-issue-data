@@ -1,0 +1,10 @@
+--- a/rllib/utils/pre_checks/env.py
++++ b/rllib/utils/pre_checks/env.py
+@@ -775,6 +775,7 @@ def _check_if_element_multi_agent_dict(env, element, function_string, base_env=F
+         raise ValueError(error)
+     agent_ids: Set = copy(env.get_agent_ids())
+     agent_ids.add("__all__")
++    agent_ids.add("__common__")
+ 
+     if not all(k in agent_ids for k in element):
+         if base_env:Y126)

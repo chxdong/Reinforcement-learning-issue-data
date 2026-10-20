@@ -1,0 +1,75 @@
+% \begin{figure*}[t]
+%     \centering
+    
+%     \begin{subfigure}[t]{0.48\linewidth}
+%         \centering
+%         \includegraphics[width=\linewidth]{Figures/trl3047.pdf}
+%         \caption{API and Framework Misuse (TRL \#3047)}
+%         \label{fig:afm}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[t]{0.48\linewidth}
+%         \centering
+%         \includegraphics[width=\linewidth]{Figures/trl3480.pdf}
+%         \caption{External Dependency Conflict (TRL \#3480)}
+%         \label{fig:edc}
+%     \end{subfigure}
+
+%     \caption{Bug Examples of API and Framework Misuse and External Dependency Conflict.}
+%     \label{fig:afm_edc_example}
+% \end{figure*}
+
+\begin{figure*}[t]
+    \centering
+    % Two separate figures in the first row
+    \begin{subfigure}[t]{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{Figures/trl3047.pdf}
+        \caption{The TRL issue \#3047.}
+        \label{fig:afm1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{Figures/rllib16287.pdf}
+        \caption{The RLlib \#16287.}
+        \label{fig:afm2}
+    \end{subfigure}
+    \caption{The examples of API and framework misuse.}
+\end{figure*}
+
+
+% \begin{figure*}[t]
+%     \begin{subfigure}[b]{0.48\textwidth}
+%         \centering
+%         \begin{minipage}{0.95\linewidth}
+%             \del{self.\_total\_train\_tokens += }
+%             \del{\phantom{+= }self.accelerator.gather\_for\_metrics}
+%             \del{\phantom{+= }(inputs["attention\_mask"].sum().item())}
+%             \add{self.\_total\_train\_tokens += }
+%             \add{\phantom{+= }self.accelerator.gather\_for\_metrics}
+%             \add{\phantom{+= }(inputs["attention\_mask"]).sum().item()}
+%             \vspace{0.5em} % Add a small gap for alignment
+%         \end{minipage}
+%         \caption{API and Framework Misuse (TRL\#3047)}
+%         \label{fig:afm}
+%     \end{subfigure}
+%     \hfill
+%     % Subfigure (f)
+%     \begin{subfigure}[b]{0.48\textwidth}
+%         \centering
+%         \begin{minipage}{0.95\linewidth}
+%             \ctx{install\_requires =}
+%             \del{\phantom{install\_requires}transformers>=4.46.0}
+%             \add{\phantom{install\_requires}transformers>=4.50.0}
+%             \ctx{......}
+%             \ctx{liger =}
+%             \del{\phantom{liger }liger-kernel>=0.5.8}
+%             \add{\phantom{liger }liger-kernel>=0.5.9}
+%         \end{minipage}
+%         \caption{External Dependency Conflict (TRL\#3480)}
+%         \label{fig:edc}
+%     \end{subfigure}
+%     \caption{Bug Examples of API and Framework Misuse and External Dependency Conflict.}
+%     \label{fig:afm_edc_example}
+% \end{figure*}

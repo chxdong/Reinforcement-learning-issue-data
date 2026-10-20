@@ -1,0 +1,26 @@
+--- a/scripts/generate_tiny_models.py
++++ b/scripts/generate_tiny_models.py
+@@ -161,6 +161,7 @@ for model_id, config_class, model_class, suffix in [
+         num_key_value_heads=2,
+         num_hidden_layers=2,
+         intermediate_size=32,
++        **({"layer_types": ["full_attention"] * 2} if config_class is Qwen2Config else {}),
+     )
+     model = model_class(config)
+     init_weights_tiny_model(model)
+@@ -196,6 +197,7 @@ config = Qwen2Config(
+     num_key_value_heads=2,
+     num_hidden_layers=2,
+     intermediate_size=32,
++    layer_types=["full_attention"] * 2,
+ )
+ model = Qwen2ForCausalLM(config)
+ push_to_hub(model, tokenizer, "small", "2.5")
+@@ -223,6 +225,7 @@ for model_id, config_class, model_class, suffix in [
+         num_hidden_layers=2,
+         intermediate_size=32,
+         num_labels=1,
++        **({"layer_types": ["full_attention"] * 2} if config_class is Qwen2Config else {}),
+     )
+     model = model_class(config)
+     push_to_hub(model, tokenizer, "tiny", suffix)

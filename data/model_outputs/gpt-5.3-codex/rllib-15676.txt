@@ -1,0 +1,10 @@
+--- a/rllib/utils/exploration/curiosity.py
++++ b/rllib/utils/exploration/curiosity.py
+@@ -29,4 +29,6 @@ def _postprocess_helper_tf(self, obs, next_obs, actions):
+             # Neg log(p); p=probability of observed action given the inverse-NN
+             # predicted action distribution.
+-            inverse_loss = -action_dist.logp(actions)
++            inverse_loss = -action_dist.logp(
++                actions if isinstance(self.action_space, Discrete) else tf.transpose(actions)
++            )
+             inverse_loss = tf.reduce_mean(inverse_loss)

@@ -1,0 +1,8 @@
+--- a/rllib/env/multi_agent_env.py
++++ b/rllib/env/multi_agent_env.py
+@@ -1,3 +1,4 @@
+@@
+-        self._unwrapped_env = self.envs[0].unwrapped
+-        self._agent_ids = self._unwrapped_env.get_agent_ids()
++        self._unwrapped_env = self.envs[0].unwrapped
++        self._agent_ids = self.envs[0].get_agent_ids()

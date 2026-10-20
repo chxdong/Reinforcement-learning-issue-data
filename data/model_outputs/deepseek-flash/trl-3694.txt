@@ -1,0 +1,12 @@
+--- a/src/transformers/trainer.py
++++ b/src/transformers/trainer.py
+@@ -1,3 +1,4 @@
+@@
+-        self.can_return_loss = can_return_loss(self.model.__class__)
++        # `PeftModel` (e.g. LoRA) hides the base model's `forward` signature behind
++        # `**kwargs`, which makes `can_return_loss` incorrectly return False and
++        # prevents the eval loss from being reported. Infer from the base model instead.
++        can_return_loss_model_class = self.model.__class__
++        if _is_peft_model(self.model):
++            can_return_loss_model_class = unwrapped_model.__class__
++        self.can_return_loss = can_return_loss(can_return_loss_model_class)

@@ -1,0 +1,9 @@
+@@ -1,5 +1,5 @@
+         try:
+             self.setup()
+-        except AttributeError as e:
+-            if "'NoneType' object has no attribute " in e.args[0]:
+-                raise (self._catalog_ctor_error or e)
++        except Exception as e:
++            # Re-raise any exception from setup() to provide clear error messages to the user.
++            raise e

@@ -1,0 +1,7 @@
+@@ -1,3 +1,6 @@
++    # Check if training is enabled for this episode. If not, skip data collection.
++    if not base_env.training_enabled:
++        return active_envs, to_eval, outputs
+     # For each (vectorized) sub-environment.
+     # types: EnvID, Dict[AgentID, EnvObsType]
+     for env_id, all_agents_obs in unfiltered_obs.items():

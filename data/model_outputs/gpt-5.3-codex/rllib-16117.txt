@@ -1,0 +1,30 @@
+--- a/rllib/agents/dqn/dqn_torch_policy.py
++++ b/rllib/agents/dqn/dqn_torch_policy.py
+@@ -183,8 +183,6 @@ def build_q_model_and_distribution(
+         #  generically into ModelCatalog.
+         add_layer_norm=add_layer_norm)
+ 
+-    policy.q_func_vars = model.variables()
+-
+     policy.target_q_model = ModelCatalog.get_model_v2(
+         obs_space=obs_space,
+         action_space=action_space,
+@@ -209,8 +207,6 @@ def build_q_model_and_distribution(
+         #  generically into ModelCatalog.
+         add_layer_norm=add_layer_norm)
+ 
+-    policy.target_q_func_vars = policy.target_q_model.variables()
+-
+     return model, TorchCategorical
+--- a/rllib/agents/dqn/r2d2_torch_policy.py
++++ b/rllib/agents/dqn/r2d2_torch_policy.py
+@@ -22,8 +22,8 @@ class ComputeTDErrorMixin:
+ 
+ def adam_optimizer(policy: Policy,
+                    config: TrainerConfigDict) -> "torch.optim.Optimizer":
+     return torch.optim.Adam(
+-        policy.q_func_vars, lr=policy.cur_lr, eps=config["adam_epsilon"])
++        policy.model.variables(), lr=policy.cur_lr, eps=config["adam_epsilon"])
+ 
+ 
+ def build_q_stats(policy: Policy, batch) -> Dict[str, TensorType]:X

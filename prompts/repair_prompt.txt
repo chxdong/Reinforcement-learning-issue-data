@@ -1,0 +1,29 @@
+You are an expert software engineer fixing a bug in an open-source reinforcement learning framework.
+
+Issue title: {issue_title}
+
+Issue description:
+{issue_body}
+
+Files to modify (their current pre-fix contents are provided below):
+{files_context}
+
+The reported issue occurs in a reinforcement learning framework. Such frameworks train and evaluate policies through repeated interaction with environments, and may contain policy, learner, rollout or trajectory, replay-buffer, environment-wrapper, vectorized-execution, distributed-worker, and device-management components. This background is provided only to establish the application context; infer the actual defect from the issue and code rather than assuming a particular bug category.
+
+Analyze the issue and the provided code, then produce the smallest code change that addresses the reported behavior.
+
+Constraints:
+
+1. Use only the issue information and source code supplied in this prompt. Do not rely on pull requests, commits, developer patches, external repositories, or unstated test results.
+2. Do not browse the web, search online, use retrieval, call external tools, access external repositories, or make network requests. Treat this prompt as the complete information available for the task.
+3. Modify only files provided in "Files to modify". Do not add unrelated refactoring, documentation changes, formatting-only changes, or speculative dependency upgrades.
+4. Preserve existing public interfaces and behavior unless changing them is necessary to satisfy the issue description.
+5. Ensure that the patch is syntactically valid and that file paths in the patch exactly match the provided relative paths.
+6. If the supplied information is insufficient to justify a patch, state "NO_PATCH" and briefly explain the missing evidence. Do not fabricate APIs, files, stack traces, or runtime behavior.
+
+Output format:
+
+1. First, provide a concise explanation of the suspected cause and the intended change (at most 120 words).
+2. Then output exactly one Unified Diff inside a fenced ```diff code block.
+3. Do not include explanations, Markdown tables, or any other text inside the diff block.
+4. If no defensible patch can be produced, do not output a diff block; output "NO_PATCH" followed by the concise explanation.

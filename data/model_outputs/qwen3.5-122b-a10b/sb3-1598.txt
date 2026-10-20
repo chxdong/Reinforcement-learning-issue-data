@@ -1,0 +1,14 @@
+--- a/stable_baselines3/common/logger.py
++++ b/stable_baselines3/common/logger.py
+@@ -167,7 +167,9 @@
+         self.max_length = max_length
+         if isinstance(filename_or_file, str):
+             self.file = open(filename_or_file, "w")
+             self.own_file = True
+-        elif isinstance(filename_or_file, TextIOBase):
++        elif isinstance(filename_or_file, TextIOBase) or (
++            hasattr(filename_or_file, "write") and hasattr(filename_or_file, "flush")
++        ):
+             self.file = filename_or_file
+             self.own_file = False
+         else:Y77

@@ -1,0 +1,29 @@
+--- a/rllib/evaluation/sampler.py
++++ b/rllib/evaluation/sampler.py
+@@ -103,7 +103,10 @@ def _process_observations(
+             # Record transition info if applicable.
+             if last_observation is None:
+-                sample_collector.add_init_obs(episode, agent_id, env_id,
+-                                              policy_id, episode.length - 1,
+-                                              filtered_obs)
++                if agent_infos.get("training_enabled", True):
++                    sample_collector.add_init_obs(episode, agent_id, env_id,
++                                                  policy_id, episode.length - 1,
++                                                  filtered_obs)
+             else:
+                 # Add actions, rewards, next-obs to collectors.
+                 values_dict = {
+@@ -133,9 +136,10 @@ def _process_observations(
+                 # Env infos for this agent.
+                 if "infos" in pol.view_requirements:
+                     values_dict["infos"] = agent_infos
+-                sample_collector.add_action_reward_next_obs(
+-                    episode.episode_id, agent_id, env_id, policy_id,
+-                    agent_done, values_dict)
++                if agent_infos.get("training_enabled", True):
++                    sample_collector.add_action_reward_next_obs(
++                        episode.episode_id, agent_id, env_id, policy_id,
++                        agent_done, values_dict)
+             if not agent_done:
+                 item = PolicyEvalData(
+                     env_id, agent_id, filtered_obs, agent_infos, None)))

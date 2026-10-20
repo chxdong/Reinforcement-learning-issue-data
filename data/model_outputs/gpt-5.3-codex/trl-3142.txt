@@ -1,0 +1,10 @@
+--- a/trl/scripts/vllm_serve.py
++++ b/trl/scripts/vllm_serve.py
+@@ -42,6 +42,8 @@ if is_uvicorn_available():
+     import uvicorn
+ if is_vllm_available():
++    # WeightSyncWorker subclasses the legacy vLLM Worker, which is not compatible with the v1 engine.
++    os.environ.setdefault("VLLM_USE_V1", "0")
+     from vllm import LLM, SamplingParams
+     from vllm.distributed.device_communicators.pynccl import PyNcclCommunicator
+     from vllm.distributed.parallel_state import get_world_group

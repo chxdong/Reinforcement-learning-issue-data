@@ -1,0 +1,11 @@
+--- a/stable_baselines3/common/off_policy_algorithm.py
++++ b/stable_baselines3/common/off_policy_algorithm.py
+@@ -150,6 +150,8 @@
+         """
+         self.replay_buffer = load_from_pkl(path, self.verbose)
+         assert isinstance(self.replay_buffer, ReplayBuffer), "The replay buffer must inherit from ReplayBuffer class"
++        # Move the loaded replay buffer to the correct device
++        self.replay_buffer.to(self.device)
+ 
+         # Backward compatibility with SB3 < 2.1.0 replay buffer
+         # Keep old behavior: do not handle timeout termination separately

@@ -1,0 +1,7 @@
+--- a/stable_baselines3/common/base_class.py
++++ b/stable_baselines3/common/base_class.py
+@@ -472,4 +472,5 @@ class BaseAlgorithm(ABC):
+             self._last_obs = None
+         self.n_envs = env.num_envs
+         self.env = env
++        self._vec_normalize_env = unwrap_vec_normalize(env)

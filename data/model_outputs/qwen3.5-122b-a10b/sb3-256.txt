@@ -1,0 +1,27 @@
+--- a/stable_baselines3/common/logger.py
++++ b/stable_baselines3/common/logger.py
+@@ -173,7 +173,6 @@ class HumanOutputFormat(KVWriter, SeqWriter):
+     def write(self, key_values: Dict, key_excluded: Dict, step: int = 0) -> None:
+         # Create strings for printing
+         key2str = {}
+-        tag = None
+         for (key, value), (_, excluded) in zip(sorted(key_values.items()), sorted(key_excluded.items())):
+             if excluded is not None and ("stdout" in excluded or "log" in excluded):
+                 continue
+@@ -196,13 +195,13 @@ class HumanOutputFormat(KVWriter, SeqWriter):
+             else:
+                 value_str = str(value)
+ 
+-            if key.find("/") > 0:  # Find tag and add it to the dict
+-                tag = key[: key.find("/") + 1]
++            # Find tag and add it to the dict
++            tag = key[: key.find("/") + 1] if key.find("/") > 0 else None
++            if tag is not None:
+                 key2str[self._truncate(tag)] = ""
+-            # Remove tag from key
+-            if tag is not None and tag in key:
+-                key = str("   " + key[len(tag) :])
++                # Remove tag from key
++                key = str("   " + key[len(tag) :])
+ 
+             truncated_key = self._truncate(key)'

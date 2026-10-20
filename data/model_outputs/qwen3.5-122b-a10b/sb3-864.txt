@@ -1,0 +1,11 @@
+--- a/stable_baselines3/common/on_policy_algorithm.py
++++ b/stable_baselines3/common/on_policy_algorithm.py
+@@ -210,6 +210,8 @@ class OnPolicyAlgorithm(BaseAlgorithm):
+             # Compute value for the last timestep
+             values = self.policy.predict_values(obs_as_tensor(new_obs, self.device))  # type: ignore[arg-type]
+ 
++        callback.update_locals(locals())
++
+         rollout_buffer.compute_returns_and_advantage(last_values=values, dones=dones)
+ 
+         callback.on_rollout_end()

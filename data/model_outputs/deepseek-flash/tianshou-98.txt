@@ -1,0 +1,11 @@
+    def forward(self, s, **kwargs):
+        if not isinstance(s, torch.Tensor):
+            s = torch.tensor(s, device=self.device, dtype=torch.float)
+        batch = s.shape[0]
+        s = s.view(batch, -1)
+        logits = self.model(s)
+        mu = self._max * torch.tanh(self.mu(logits))
+        if not self._unbounded:
+            mu = self._max * torch.tanh(self.mu(logits))
+        sigma = torch.exp(self.sigma(logits))
+        return (mu, sigma), None

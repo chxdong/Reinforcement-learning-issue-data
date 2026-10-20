@@ -1,0 +1,57 @@
+--- a/rllib/utils/pre_checks/env.py
++++ b/rllib/utils/pre_checks/env.py
+@@ -566,7 +566,7 @@ def check_multiagent_environments(env: "MultiAgentEnv") -> None:
+     _check_if_element_multi_agent_dict(env, reward, "step, reward")
+     _check_if_element_multi_agent_dict(env, done, "step, done")
+     _check_if_element_multi_agent_dict(env, truncated, "step, truncated")
+-    _check_if_element_multi_agent_dict(env, info, "step, info")
++    _check_if_element_multi_agent_dict(env, info, "step, info", allow_common_info=True)
+     _check_reward(
+         {"dummy_env_id": reward}, base_env=True, agent_ids=env.get_agent_ids()
+     )
+@@ -745,14 +745,20 @@ def _check_if_multi_env_dict(env, element, function_string):
+             )
+ 
+ def _check_if_element_multi_agent_dict(env, element, function_string, base_env=False):
++    allow_common_info = False
++    if function_string == "step, info":
++        allow_common_info = True
++
+     if not isinstance(element, dict):
+         if base_env:
+             error = (
+                 f"The element returned by {function_string} contains values "
+                 f"that are not MultiAgentDicts. Instead, they are of "
+                 f"type: {type(element)}"
+             )
+         else:
+             error = (
+                 f"The element returned by {function_string} is not a "
+                 f"MultiAgentDict. Instead, it is of type: "
+                 f" {type(element)}"
+             )
+         raise ValueError(error)
+     agent_ids: Set = copy(env.get_agent_ids())
+     agent_ids.add("__all__")
++    if allow_common_info:
++        agent_ids.add("__common__")
+     if not all(k in agent_ids for k in element):
+         if base_env:
+             error = (
+                 f"The element returned by {function_string} has agent_ids"
+                 f" that are not the names of the agents in the env."
+                 f"agent_ids in this\nMultiEnvDict:"
+                 f" {list(element.keys())}\nAgent_ids in this env:"
+                 f"{list(env.get_agent_ids())}"
+             )
+         else:
+             error = (
+                 f"The element returned by {function_string} has agent_ids"
+                 f" that are not the names of the agents in the env. "
+                 f"\nAgent_ids in this MultiAgentDict: "
+                 f"{list(element.keys())}\nAgent_ids in this env:"
+                 f"{list(env.get_agent_ids())}. You likely need to add the private "
+                 f"attribute `_agent_ids` to your env, which is a set containing the "
+                 f"ids of agents supported by your env."
+             )
+         raise ValueError(error)

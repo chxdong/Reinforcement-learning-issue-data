@@ -1,0 +1,13 @@
+@@ -1,5 +1,5 @@
+     def test_multi_agent_dict_invalid_sub_values(self):
+         config = {"multiagent": {"count_steps_by": "invalid_value"}}
+         self.assertRaisesRegex(
+             ValueError, "config.multiagent.count_steps_by must be", lambda: PG(config, env="CartPole-v0"),
+         )
+         config = {"multiagent": {"replay_mode": "invalid_value"}}
+-        self.assertRaisesRegex(
+-            ValueError, "config.multiagent.replay_mode must be", lambda: PG(config, env="CartPole-v0"),
+-        )
++        self.assertRaisesRegex(
++            ValueError, r"`config.multiagent.replay_mode` must be", lambda: PG(config, env="CartPole-v0"),
++        )

@@ -1,0 +1,23 @@
+@@ -1,5 +1,5 @@
+-def set_env(self, env: GymEnv, force_reset: bool = True) -> None:
++def set_env(self, env: GymEnv, force_reset: bool = True, keep_old_num_envs: bool = False) -> None:
+     """
+     Checks the validity of the environment, and if it is coherent, set it as the current environment.
+     Furthermore wrap any non vectorized env into a vectorized
+@@ -7,6 +7,8 @@
+     - observation_space
+     - action_space
+
++    :param keep_old_num_envs: If True, the number of environments (num_envs)
++        from the loaded model is kept, instead of using the one from the new env.
+     :param env: The environment for learning a policy
+     :param force_reset: Force call to ``reset()`` before training
+         to avoid unexpected behavior.
+@@ -21,7 +23,8 @@
+         if force_reset:
+             self._last_obs = None
+
+-        self.n_envs = env.num_envs
++        if not keep_old_num_envs:
++            self.n_envs = env.num_envs
+         self.env = env

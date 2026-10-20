@@ -1,0 +1,12 @@
+--- a/rllib/env/multi_agent_env.py
++++ b/rllib/env/multi_agent_env.py
+@@ -662,7 +662,7 @@ class _MultiAgentEnvToBaseEnv(BaseEnv):
+             assert isinstance(rewards, dict), "Not a multi-agent reward dict!"
+             assert isinstance(terminateds, dict), "Not a multi-agent terminateds dict!"
+             assert isinstance(truncateds, dict), "Not a multi-agent truncateds dict!"
+             assert isinstance(infos, dict), "Not a multi-agent info dict!"
+-            if isinstance(obs, dict) and set(infos).difference(set(obs)):
++            if isinstance(obs, dict) and set(infos).difference(set(obs) | {"__common__"}):
+                 raise ValueError(
+                     "Key set for infos must be a subset of obs: "
+                     "{} vs {}".format(infos.keys(), obs.keys()))

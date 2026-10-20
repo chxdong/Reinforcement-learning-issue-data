@@ -1,0 +1,22 @@
+--- a/stable_baselines3/common/vec_env/vec_normalize.py
++++ b/stable_baselines3/common/vec_env/vec_normalize.py
+@@ -37,9 +37,9 @@ class VecNormalize(VecEnvWrapper):
+         self.norm_obs = norm_obs
+         self.norm_obs_keys = norm_obs_keys
+         # Check observation spaces
+-        if self.norm_obs:
+-            self._sanity_checks()
++        self._sanity_checks()
+ 
+         if isinstance(self.observation_space, gym.spaces.Dict):
+             self.obs_spaces = self.observation_space.spaces
+             self.obs_rms = {key: RunningMeanStd(shape=self.obs_spaces[key].shape) for key in self.norm_obs_keys}
+@@ -68,7 +68,7 @@ class VecNormalize(VecEnvWrapper):
+             if self.norm_obs_keys is None:
+                 self.norm_obs_keys = list(self.observation_space.spaces.keys())
+             # Check that all keys are of type Box
+-            for obs_key in self.norm_obs_keys:
++            for obs_key in self.norm_obs_keys if self.norm_obs else []:
+                 if not isinstance(self.observation_space.spaces[obs_key], gym.spaces.Box):
+                     raise ValueError(
+                         f"VecNormalize only supports `gym.spaces.Box` observation spaces but {obs_key} "))

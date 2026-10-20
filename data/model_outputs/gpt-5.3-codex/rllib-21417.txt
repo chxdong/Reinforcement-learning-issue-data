@@ -1,0 +1,13 @@
+--- a/rllib/agents/trainer.py
++++ b/rllib/agents/trainer.py
+@@ -69,6 +69,11 @@
+                 new="Trainer.compute_single_action(`unsquash_action`=...)",
+                 error=False)
+             unsquash_action = unsquash_actions
++        if unsquash_action is None:
++            unsquash_action = self.config["normalize_actions"]
++        if clip_action is None:
++            clip_action = self.config["clip_actions"]
+ 
+         # User provided an input-dict: Assert that `obs`, `prev_a|r`, `state`
+         # are all None.

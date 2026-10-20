@@ -1,0 +1,12 @@
+--- a/trl/models/utils.py
++++ b/trl/models/utils.py
+@@ -32,5 +32,9 @@
+         optimizer_offload = model.optimizer.parameter_offload
+     elif model.optimizer is not None:
+         optimizer_offload = model.optimizer
+-    optimizer_offload._register_hooks_recursively(optimizer_offload.module)
++    
++    if hasattr(optimizer_offload, "_register_hooks_recursively"):
++        optimizer_offload._register_hooks_recursively(optimizer_offload.module)
++    else:
++        optimizer_offload.register_hooks_recursively(optimizer_offload.module)

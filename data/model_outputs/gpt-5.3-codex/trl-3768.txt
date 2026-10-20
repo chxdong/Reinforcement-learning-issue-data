@@ -1,0 +1,12 @@
+--- a/trl/trainer/sft_trainer.py
++++ b/trl/trainer/sft_trainer.py
+@@ -470,7 +470,9 @@ class SFTTrainer(Trainer):
+                 pad_to_multiple_of=args.pad_to_multiple_of,
+             )
+-        if args.assistant_only_loss and not is_conversational(train_dataset[0]):
++        if args.assistant_only_loss:
++            first_example = next(iter(train_dataset)) if isinstance(train_dataset, IterableDataset) else train_dataset[0]
++        if args.assistant_only_loss and not is_conversational(first_example):
+             raise ValueError(
+                 "You set `assistant_only_loss=True`, but the dataset is not conversational. This option is only "
+                 "supported for conversational datasets."

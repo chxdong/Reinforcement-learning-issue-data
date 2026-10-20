@@ -1,0 +1,16 @@
+@@ -455,11 +455,12 @@ class SFTTrainer(Trainer):
+             if args.completion_only_loss is None:
+                 first_example = next(iter(train_dataset))
+                 self.completion_only_loss = "prompt" in first_example
+             else:
+                 self.completion_only_loss = args.completion_only_loss
+-            if args.assistant_only_loss and not is_conversational(train_dataset[0]):
+-                raise ValueError(
+-                    "You set `assistant_only_loss=True`, but the dataset is not conversational. This option is only "
+-                    "supported for conversational datasets."
+-                )
++            if args.assistant_only_loss:
++                if isinstance(train_dataset, IterableDataset):
++                    raise ValueError("assistant_only_loss=True is not supported for IterableDataset.")
++                if not is_conversational(train_dataset[0]):
++                    raise ValueError("You set `assistant_only_loss=True`, but the dataset is not conversational. This option is only supported for conversational datasets.")

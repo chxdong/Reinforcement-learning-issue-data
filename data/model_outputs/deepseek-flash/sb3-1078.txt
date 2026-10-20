@@ -1,0 +1,11 @@
+--- a/stable_baselines3/common/logger.py
++++ b/stable_baselines3/common/logger.py
+@@ -1,3 +1,4 @@
+@@
+             truncated_key = self._truncate(key)
+             if truncated_key in key2str:
+-                raise ValueError(
+-                    f"Key '{key}' truncated to '{truncated_key}' that already exists. Consider increasing `max_length`."
+-                )
++                continue
+             key2str[truncated_key] = self._truncate(value_str)

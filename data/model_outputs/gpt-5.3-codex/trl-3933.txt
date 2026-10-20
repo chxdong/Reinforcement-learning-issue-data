@@ -1,0 +1,18 @@
+--- a/trl/trainer/grpo_trainer.py
++++ b/trl/trainer/grpo_trainer.py
+@@ -17,15 +17,15 @@ def get_high_entropy_mask(self, entropies: torch.Tensor, mask: torch.Tensor, threshold: float) -> torch.Tensor:
+         """
+         non_pad_entropies = entropies[mask.bool()].float()
+-        if non_pad_entropies.numel() == 0:
+-            return torch.zeros_like(entropies, dtype=torch.bool)
+ 
+         # The shape of non_pad_entropies can be different on each gpu/device.
+         # this can cause the gather operation to hang. So we first gather the lengths
+         # of non_pad_entropies and pad them to the max length before doing a gather.
+         non_pad_entropies_seq_length = torch.tensor([non_pad_entropies.numel()], device=entropies.device)
+         max_non_pad_entropies_seq_length = self.accelerator.gather(non_pad_entropies_seq_length).max().item()
++        if max_non_pad_entropies_seq_length == 0:
++            return torch.zeros_like(entropies, dtype=torch.bool)
+         padding = torch.zeros(
+             max_non_pad_entropies_seq_length - non_pad_entropies.numel(), device=non_pad_entropies.device
+         ))

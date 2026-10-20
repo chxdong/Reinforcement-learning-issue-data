@@ -1,0 +1,9 @@
+--- a/stable_baselines3/common/base_class.py
++++ b/stable_baselines3/common/base_class.py
+@@ -1,3 +1,4 @@
+@@
+-            if "net_arch" in data["policy_kwargs"] and len(data["policy_kwargs"]["net_arch"]) > 0:
++            if data.get("policy_kwargs", {}).get("net_arch"):
+                 saved_net_arch = data["policy_kwargs"]["net_arch"]
+                 if isinstance(saved_net_arch, list) and isinstance(saved_net_arch[0], dict):
+                     data["policy_kwargs"]["net_arch"] = saved_net_arch[0]

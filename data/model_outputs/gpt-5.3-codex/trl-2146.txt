@@ -1,0 +1,18 @@
+--- a/examples/scripts/chat.py
++++ b/examples/scripts/chat.py
+@@ -1,10 +1,12 @@
+             chat.append({"role": "user", "content": user_input})
+
++            model_inputs = tokenizer.apply_chat_template(
++                chat, return_tensors="pt", add_generation_prompt=True, return_dict=True
++            ).to(model.device)
++
+             generation_kwargs = dict(
+-                inputs=tokenizer.apply_chat_template(chat, return_tensors="pt", add_generation_prompt=True).to(
+-                    model.device
+-                ),
++                inputs=model_inputs["input_ids"],
++                attention_mask=model_inputs["attention_mask"],
+                 streamer=generation_streamer,
+                 max_new_tokens=current_args.max_new_tokens,
+                 do_sample=current_args.do_sample,

@@ -1,0 +1,10 @@
+--- a/trl/models/utils.py
++++ b/trl/models/utils.py
+@@ -224,7 +224,7 @@ def clone_chat_template(
+     tokenizer.eos_token = tokenizer_source.eos_token
+     model.config.eos_token_id = tokenizer.eos_token_id
+-    if model.generation_config is not None:  # for SequenceClassification models, generation_config is None
++    if getattr(model, "generation_config", None) is not None:  # for SequenceClassification models, generation_config may be None
+         model.generation_config.eos_token_id = tokenizer.eos_token_id
+ 
+     # Resize model embeddings to include any new tokens, optionally rounding up to a multiple)

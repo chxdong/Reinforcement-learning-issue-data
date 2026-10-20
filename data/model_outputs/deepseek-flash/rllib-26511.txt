@@ -1,0 +1,12 @@
+--- a/rllib/utils/tf_run_builder.py
++++ b/rllib/utils/tf_run_builder.py
+@@ -73,8 +73,8 @@
+         from tensorflow.python.client import timeline
+ 
+-        run_options = tf1.RunOptions(trace_level=tf.RunOptions.FULL_TRACE)
+-        run_metadata = tf1.RunMetadata()
++        run_options = tf1.RunOptions(trace_level=tf1.RunOptions.FULL_TRACE)
++        run_metadata = tf1.RunMetadata()
+         start = time.time()
+         fetches = sess.run(
+             ops, options=run_options, run_metadata=run_metadata, feed_dict=feed_dict)

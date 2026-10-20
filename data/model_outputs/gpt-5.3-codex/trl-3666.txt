@@ -1,0 +1,11 @@
+--- a/trl/trainer/grpo_trainer.py
++++ b/trl/trainer/grpo_trainer.py
+@@ -14,7 +14,7 @@ def _compute_loss(self, model, inputs):
+             entropies = logps_and_entropies["entropies"]
+             # compute the entropy threshold across all tokens in the batch
+
+-            entropy_threshold = torch.quantile(entropies.flatten(), self.token_entropy_percentile_threshold)
++            entropy_threshold = torch.quantile(entropies.float().flatten(), self.token_entropy_percentile_threshold)
+             entropy_mask = entropies >= entropy_threshold
+         else:
+             per_token_logps = self._get_per_token_logps_and_entropies())

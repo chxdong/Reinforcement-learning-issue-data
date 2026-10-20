@@ -1,0 +1,55 @@
+@@ -361,19 +361,25 @@ def timeslice_along_seq_lens_with_overlap(
+     zero_init_states (bool): Whether initial states should always be zero'd.
+         If False, will use the state_outs of the batch to populate state_in values.
+ 
+     Returns:
+         List[SampleBatch]: The list of (new) SampleBatches.
+ 
+     Examples:
+         assert seq_lens == [5, 5, 2]
+         assert sample_batch.count == 12
+         # self = 0 1 2 3 4 | 5 6 7 8 9 | 10 11 <- timesteps
+         slices = timeslices_along_seq_lens(
+             zero_pad_max_seq_len=10,
+             pre_overlap=3)
+         # Z = zero padding (at beginning or end).
+         # |pre (3)| seq | max-seq-len (up to 10)
+         # slices[0] = | Z Z Z | 0 1 2 3 4 | Z Z
+         # slices[1] = | 2 3 4 | 5 6 7 8 9 | Z Z
+         # slices[2] = | 7 8 9 | 10 11 Z Z Z | Z Z
+         # Note that `zero_pad_max_seq_len=10` includes the 3 pre-overlaps
+         # count (makes sure each slice has exactly length 10).
+     """
+     if seq_lens is None:
+         seq_lens = sample_batch.get("seq_lens")
+     assert seq_lens is not None and len(seq_lens) > 0, \
+         "Cannot timeslice along `seq_lens` when `seq_lens` is empty or None!"
+ 
+     # Generate n slices based on seq_lens.
+     start = 0
+     slices = []
++    # Track the start index of the previous episode to prevent pre_overlap
++    # from crossing episode boundaries.
++    prev_episode_start = 0
+     for seq_len in seq_lens:
+-        begin = start - pre_overlap
++        # Calculate the tentative begin index with pre_overlap.
++        tentative_begin = start - pre_overlap
++        # Ensure the begin index does not cross the previous episode's boundary.
++        # The pre_overlap should not go beyond the start of the current episode.
++        begin = max(tentative_begin, start)
++        prev_episode_start = start
+         end = start + seq_len  # + post_overlap
+         slices.append((begin, end))
+         start += seq_len
+     timeslices = []
+     for begin, end in slices:
+         zero_length = None
+         data_begin = 0
+         zero_init_states_ = zero_init_states
+         if begin < 0:
+             zero_length = -begin
+             data_begin = 0
+             zero_init_states_ = True
+         else:
+             eps_ids = sample_batch[SampleBatch.EPS_ID][begin if begin >= 0 else

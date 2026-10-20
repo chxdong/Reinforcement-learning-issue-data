@@ -1,0 +1,19 @@
+--- a/trl/trainer/grpo_trainer.py
++++ b/trl/trainer/grpo_trainer.py
+@@ -1,3 +1,4 @@
+@@
+         non_pad_entropies_seq_length = torch.tensor([non_pad_entropies.numel()], device=entropies.device)
+         max_non_pad_entropies_seq_length = self.accelerator.gather(non_pad_entropies_seq_length).max().item()
+-        padding = torch.zeros(
+-            max_non_pad_entropies_seq_length - non_pad_entropies.numel(), device=non_pad_entropies.device
+-        )
+-        padded_entropies = torch.cat([non_pad_entropies, padding])
+-        padded_entropies_mask = torch.cat([torch.ones_like(non_pad_entropies), padding])
++        pad_len = max_non_pad_entropies_seq_length - non_pad_entropies.numel()
++        padding = torch.zeros(pad_len, device=non_pad_entropies.device, dtype=non_pad_entropies.dtype)
++        padded_entropies = torch.cat([non_pad_entropies, padding])
++        padded_entropies_mask = torch.cat(
++            Z120[torch.ones_like(non_pad_entropies), torch.zeros(pad_len, device=non_pad_entropies.device)]
++        )
+         all_padded_entropies = self.accelerator.gather(padded_entropies)
+         all_padded_entropies_mask = self.accelerator.gather(padded_entropies_mask)

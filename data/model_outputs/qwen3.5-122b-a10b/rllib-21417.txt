@@ -1,0 +1,12 @@
+@@ -105,7 +105,8 @@
+         )
+ 
+         # If we work in normalized action space (normalize_actions=True),
+-        # we re-translate here into the env's action space.
++        # we re-translate here into the env's action space.
++        if unsquash_action is None: unsquash_action = self.config.get("normalize_actions", False)
+         if unsquash_action:
+             action = space_utils.unsquash_action(action, policy.action_space_struct)
+         # Clip, according to env's action space.
+         elif clip_action:
+             action = space_utils.clip_action(action, policy.action_space_struct)

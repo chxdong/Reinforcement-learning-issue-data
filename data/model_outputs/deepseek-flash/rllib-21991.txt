@@ -1,0 +1,17 @@
+@@ -116,7 +116,7 @@ def pad_batch_to_sequences_of_same_size(
+     # RNN, attention net, or multi-agent case.
+     state_keys = []
+     feature_keys_ = feature_keys or []
+     for k, v in batch.items():
+         if k.startswith("state_in_"):
+             state_keys.append(k)
+         elif (
+             not feature_keys and not k.startswith("state_out_") and k not in ["infos", SampleBatch.SEQ_LENS]
+         ):
+             feature_keys_.append(k)
++    # Ensure 'infos' is processed as a feature to be chopped and padded.
++    if SampleBatch.INFOS in batch and SampleBatch.INFOS not in feature_keys_:
++        feature_keys_.append(SampleBatch.INFOS)
+     feature_sequences, initial_states, seq_lens = chop_into_sequences(
+         feature_columns=[batch[k] for k in feature_keys_],
+         state_columns=[batch[k] for k in state_keys],

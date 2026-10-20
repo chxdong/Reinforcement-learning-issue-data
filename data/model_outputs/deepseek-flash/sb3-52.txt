@@ -1,0 +1,17 @@
+@@ -140,7 +140,10 @@ class StateDependentNoiseDistribution(Distribution):
+     def log_prob(self, actions: th.Tensor) -> th.Tensor:
+         if self.bijector is not None:
+-            gaussian_actions = actions
++            gaussian_actions = self.bijector.inverse(actions)
+         else:
+             gaussian_actions = actions
+         # log likelihood for a gaussian
+         log_prob = self.distribution.log_prob(gaussian_actions)
+         # Sum along action dim
+         log_prob = sum_independent_dims(log_prob)
+         if self.bijector is not None:
+-            # Squash correction (from original SAC implementation)
+-            pass
++            # Squash correction (from original SAC implementation)
++            log_prob -= th.sum(self.bijector.log_prob_correction(gaussian_actions), dim=1)
+         return log_prob

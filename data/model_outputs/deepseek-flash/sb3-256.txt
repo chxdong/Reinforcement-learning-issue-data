@@ -1,0 +1,64 @@
+@@ -106,27 +106,27 @@ class HumanOutputFormat(KVWriter, SeqWriter):
+         self.own_file = False
+ 
+     def write(self, key_values: Dict, key_excluded: Dict, step: int = 0) -> None:
+         # Create strings for printing
+-        key2str = {}
++        key2str = []
+         tag = None
+         for (key, value), (_, excluded) in zip(sorted(key_values.items()), sorted(key_excluded.items())):
+             if excluded is not None and ("stdout" in excluded or "log" in excluded):
+                 continue
+             elif isinstance(value, Video):
+                 raise FormatUnsupportedError(["stdout", "log"], "video")
+             elif isinstance(value, Figure):
+                 raise FormatUnsupportedError(["stdout", "log"], "figure")
+             elif isinstance(value, Image):
+                 raise FormatUnsupportedError(["stdout", "log"], "image")
+             elif isinstance(value, HParam):
+                 raise FormatUnsupportedError(["stdout", "log"], "hparam")
+             elif isinstance(value, float):
+                 # Align left
+                 value_str = f"{value:<8.3g}"
+             else:
+                 value_str = str(value)
+ 
+             if key.find("/") > 0:  # Find tag and add it to the dict
+                 tag = key[: key.find("/") + 1]
+-                key2str[self._truncate(tag)] = ""
++                key2str.append((self._truncate(tag), ""))
+             # Remove tag from key
+             if tag is not None and tag in key:
+                 key = str(" " + key[len(tag) :])
+             truncated_key = self._truncate(key)
+-            if truncated_key in key2str:
+-                raise ValueError(
+-                    f"Key '{key}' truncated to '{truncated_key}' that already exists. Consider increasing `max_length`."
+-                )
+-            key2str[truncated_key] = self._truncate(value_str)
++            key2str.append((truncated_key, self._truncate(value_str)))
+ 
+         # Find max widths
+-        if len(key2str) == 0:
++        if len(key2str) == 0:
+             warnings.warn("Tried to write empty key-value dict")
+             return
+-        else:
+-            key_width = max(map(len, key2str.keys()))
+-            val_width = max(map(len, key2str.values()))
++        key_width = max(len(kv[0]) for kv in key2str)
++        val_width = max(len(kv[1]) for kv in key2str)
+ 
+         # Write out the data
+         dashes = "-" * (key_width + val_width + 7)
+         lines = [dashes]
+-        for key, value in key2str.items():
++        for key, value in key2str:
+             key_space = " " * (key_width - len(key))
+             val_space = " " * (val_width - len(value))
+             lines.append(f"| {key}{key_space} | {value}{val_space} |")
+         lines.append(dashes)
+         self.file.write("\n".join(lines) + "\n")
+ 
+         # Flush the output to the file
+         self.file.flush()

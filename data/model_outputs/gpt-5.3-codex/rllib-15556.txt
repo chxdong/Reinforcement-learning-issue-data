@@ -1,0 +1,29 @@
+--- a/rllib/policy/rnn_sequencing.py
++++ b/rllib/policy/rnn_sequencing.py
+@@ -361,20 +361,21 @@ def timeslice_along_seq_lens_with_overlap(
+     start = 0
+     slices = []
+     for seq_len in seq_lens:
+-        begin = start - pre_overlap
++        pre_begin = start - pre_overlap
++        slice_begin = start
+         end = start + seq_len  # + post_overlap
+-        slices.append((begin, end))
++        slices.append((pre_begin, slice_begin, end))
+         start += seq_len
+ 
+     timeslices = []
+-    for begin, end in slices:
++    for begin, slice_begin, end in slices:
+         zero_length = None
+         data_begin = 0
+         zero_init_states_ = zero_init_states
+         if begin < 0:
+-            zero_length = -begin
+-            data_begin = 0
++            zero_length = pre_overlap
++            data_begin = slice_begin
+             zero_init_states_ = True
+         else:
+             eps_ids = sample_batch[SampleBatch.EPS_ID][begin if begin >= 0 else
+                                                        0:end])

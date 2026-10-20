@@ -1,0 +1,2 @@
+# Preserve file bytes so SHA256SUMS is stable across platforms.
+* -text
