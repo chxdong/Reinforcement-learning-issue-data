@@ -30,8 +30,6 @@ Commands can be run from the package directory on Windows, macOS, or Linux. Scri
 | `data/rq5_outcomes.csv` | Final binary repair judgments for 229 tasks and three models |
 | `data/model_output_index.csv` | Index of 687 expected task-model responses, with paths to the 395 stored responses |
 | `data/model_outputs/` | Stored model responses, including successful and unsuccessful candidates |
-| `data/corrections.csv` | Recorded measurement supplements and the corrected Qwen outcome for TRL #2856 |
-| `data/source_provenance.csv` | Fingerprints of the source workbooks and measurement audit |
 | `data/reference_rq5_results.json` | Reference results used to check the statistical calculations |
 | `prompts/repair_prompt.txt` | Fixed English repair prompt |
 | `rq5/settings.json` | Models, decoding parameters, context limits, and review settings |

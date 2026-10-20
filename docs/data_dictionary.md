@@ -25,7 +25,7 @@
 | `root_cause_summary` | Annotated cause or description of the recorded failure mechanism |
 | `fix_summary` | Changes made in the associated PR or documented resolution |
 
-The table retains the original numerical measurements. Three changed-file counts were supplemented from a PR audit; these and the duration supplements are listed in `corrections.csv`. Root-cause and repair summaries contain reference information and are excluded from model inputs.
+The table retains the original numerical measurements. Three changed-file counts were supplemented from PR records, and 15 missing durations were calculated from issue timestamps. Root-cause and repair summaries contain reference information and are excluded from model inputs.
 
 ## rq5_outcomes.csv
 
